@@ -3,7 +3,7 @@ from __future__ import unicode_literals
 
 from django.contrib.auth.models import User
 from django.http import HttpResponseRedirect
-from django.shortcuts import render
+from django.utils.translation import ugettext_lazy as _
 
 # Create your views here.
 from django.template.response import TemplateResponse
@@ -45,16 +45,16 @@ def index(request):
             else:
                 # Question not answered correctly.
                 return TemplateResponse(request,
-                                        "application/custom_login.html",
-                                        {'form': form, 'error_message': "Sorry, this is not correct."})
+                                        "application/index.html",
+                                        {'form': form, 'error_message': _('Das ist leider nicht richtig')})
         else:
             # Captcha not solved.
             return TemplateResponse(request,
-                                    "application/custom_login.html",
-                                    {'form': form, 'error_message': "Please enter the captcha."})
+                                    "application/index.html",
+                                    {'form': form, 'error_message': _('Bitte Captcha eingeben')})
 
     # if a GET (or any other method) we'll create a blank form
     form = CaptchaLoginForm()
-    return TemplateResponse(request, "application/custom_login.html", {'form': form})
+    return TemplateResponse(request, "application/index.html", {'form': form})
 
 

@@ -31,6 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    # This needs to be first
     'flat_responsive',
 
     'django.contrib.admin',
