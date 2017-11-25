@@ -3,6 +3,8 @@ from entity_management.settings import *
 
 DEBUG = False
 ALLOWED_HOSTS = ['studylife-muenchen.de', 'study.uber.space', 'localhost', '127.0.0.1']
+CSRF_TRUSTED_ORIGINS = ['studylife-muenchen.de', 'study.uber.space']
+
 SECRET_KEY = os.environ['SECRET_KEY']
 
 RECAPTCHA_PUBLIC_KEY = '6LccWDoUAAAAAMv5iCOIzTPUYtf3i4ORKzWLXm7h'
