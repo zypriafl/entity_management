@@ -51,7 +51,7 @@ class MemberTests(TestCase):
 
         change_url = reverse('admin:application_memberapplication_changelist')
         data = {'action': 'accept',
-                '_selected_action': [unicode(self.application.pk)]}
+                '_selected_action': [self.application.pk]}
 
         response = self.client.post(change_url, data)
         member = Member.objects.get(email='florian.zyprian@example.org')
