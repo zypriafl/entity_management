@@ -46,15 +46,19 @@ def index(request):
                 # Question not answered correctly.
                 return TemplateResponse(request,
                                         "application/index.html",
-                                        {'form': form, 'error_message': _('Das ist leider nicht richtig')})
+                                        {'form': form,
+                                         'error_message': _('Das ist leider nicht richtig'),
+                                         'site_header': "Studylife München e.V."})
         else:
             # Captcha not solved.
             return TemplateResponse(request,
                                     "application/index.html",
-                                    {'form': form, 'error_message': _('Bitte Captcha eingeben')})
+                                    {'form': form,
+                                     'error_message': _('Bitte Captcha eingeben'),
+                                     'site_header': "Studylife München e.V."})
 
     # if a GET (or any other method) we'll create a blank form
     form = CaptchaLoginForm()
-    return TemplateResponse(request, "application/index.html", {'form': form})
+    return TemplateResponse(request, "application/index.html", {'form': form, 'site_header': "Studylife München e.V."})
 
 
