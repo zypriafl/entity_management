@@ -45,7 +45,7 @@ class Member(models.Model):
                                      null=True,
                                      blank=True,
                                      choices=POSITION_TYPES,
-                                     verbose_name=_('Position im Verein'))
+                                     verbose_name=_('Position im Vorstand'))
     application_form = models.ForeignKey(MemberApplication,
                                          null=True,
                                          blank=True,
@@ -53,9 +53,14 @@ class Member(models.Model):
                                          editable=False,
                                          verbose_name=_('Mitgliedsantrag'))
 
+    member_since = models.DateField(null=False, blank=False, verbose_name=_('Mitlied seit'))
+
     created_at = models.DateTimeField(auto_now_add=True, verbose_name=_('erstellt am'))
     updated_at = models.DateTimeField(auto_now=True, verbose_name=_('geändert am'))
 
     class Meta:
         verbose_name = _('Mitglied')
         verbose_name_plural = _('Mitglieder')
+
+    def __str__(self):
+        return '{} {}'.format(self.first_name, self.last_name)
