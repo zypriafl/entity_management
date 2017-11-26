@@ -48,17 +48,26 @@ def index(request):
                                         "application/index.html",
                                         {'form': form,
                                          'error_message': _('Das ist leider nicht richtig'),
-                                         'site_header': "Studylife München e.V."})
+                                         'site_header': _('Studylife München e.V.'),
+                                         'site_title': _('Studylife München e.V.'),
+                                         'title': _('Verwaltung')})
         else:
             # Captcha not solved.
             return TemplateResponse(request,
                                     "application/index.html",
                                     {'form': form,
                                      'error_message': _('Bitte Captcha eingeben'),
-                                     'site_header': "Studylife München e.V."})
+                                     'site_header': _('Studylife München e.V.'),
+                                     'site_title': _('Studylife München e.V.'),
+                                     'title': _('Verwaltung')})
 
     # if a GET (or any other method) we'll create a blank form
     form = CaptchaLoginForm()
-    return TemplateResponse(request, "application/index.html", {'form': form, 'site_header': "Studylife München e.V."})
+    return TemplateResponse(request, 
+        "application/index.html", 
+        {'form': form, 
+        'site_header': _('Studylife München e.V.'),
+        'site_title': _('Studylife München e.V.'),
+        'title': _('Verwaltung')})
 
 

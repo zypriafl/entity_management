@@ -42,8 +42,8 @@ class Member(models.Model):
 
     # Additional Fields for internal management
     position_type = models.CharField(max_length=50,
-                                     null=False,
-                                     blank=False,
+                                     null=True,
+                                     blank=True,
                                      choices=POSITION_TYPES,
                                      verbose_name=_('Position im Verein'))
     application_form = models.ForeignKey(MemberApplication,
