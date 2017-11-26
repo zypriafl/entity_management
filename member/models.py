@@ -47,9 +47,9 @@ class Member(models.Model):
                                      choices=POSITION_TYPES,
                                      verbose_name=_('Position im Vorstand'))
     application_form = models.ForeignKey(MemberApplication,
+                                         models.SET_NULL,
                                          null=True,
                                          blank=True,
-                                         on_delete=None,
                                          editable=False,
                                          verbose_name=_('Mitgliedsantrag'))
 

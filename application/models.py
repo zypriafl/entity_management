@@ -66,8 +66,9 @@ class MemberApplication(models.Model):
             board_member = (Member.objects.filter(position_type__isnull=False))
 
             for member in board_member:
-                send_mail(_('Neuer Mitgliedsantrag'),
-                          _('Neuer Mitgliedsantrag für Studylife München e.V. eingegangen.'),
+                send_mail(_('Neuer Mitgliedsantrag füür Studylife München e.V. '),
+                          _('Neuer Mitgliedsantrag von {} {} eingegangen. '
+                            'Um den Antrag zu sehen gehe auf: https://studylife-muenchen.de'.format(self.first_name, self.last_name)),
                           'noreply@studylife-muenchen.de',
                           [member.email])
         return super(MemberApplication, self).save(*args, **kwargs)
