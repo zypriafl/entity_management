@@ -20,5 +20,6 @@ from application import views
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
+    url(r'^impressum/', views.impressum),
     url(r'^', views.index),
 ]

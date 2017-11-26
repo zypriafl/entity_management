@@ -71,3 +71,8 @@ def index(request):
         'title': _('Verwaltung')})
 
 
+def impressum(request):
+    return TemplateResponse(request, "impressum.html",{})
+
+
+
