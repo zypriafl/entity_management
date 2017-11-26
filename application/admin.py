@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
+from django.utils import timezone
+
 from django.contrib import admin
 from django.http import JsonResponse, HttpResponse
 from django.utils.translation import ugettext_lazy as _
@@ -8,6 +10,7 @@ from django.utils.translation import ugettext_lazy as _
 # Register your models here.
 from application.models import MemberApplication
 from member.models import Member
+
 
 
 def accept(modeladmin, request, queryset):
@@ -35,6 +38,7 @@ def accept(modeladmin, request, queryset):
     member.city = application.city
     member.country = application.country
     member.membership_type = application.membership_type
+    member.member_since = timezone.now()
 
     member.application_form = application
     member.save()
