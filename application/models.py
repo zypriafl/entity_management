@@ -4,6 +4,7 @@ from __future__ import unicode_literals
 from django.apps import apps
 from django.core.mail import mail_managers, mail_admins, send_mail
 from django.db import models
+from django.utils.crypto import get_random_string
 from django.utils.translation import ugettext_lazy as _
 
 from django.core.exceptions import ValidationError
@@ -35,6 +36,7 @@ class MemberApplication(models.Model):
     first_name = models.CharField(max_length=100, null=False, blank=False, verbose_name='Vorname')
     last_name = models.CharField(max_length=100, null=False, blank=False, verbose_name='Nachname')
     email = models.EmailField(null=False, blank=False, unique=True, verbose_name='Email Adresse')
+    verification_code = models.CharField(max_length=64, null=False, unique=True, editable=False)
     birthday = models.DateField(null=False, blank=False, verbose_name='Geburtsdatum')
     phone_number = models.CharField(max_length=50, null=False, blank=False, verbose_name='Telefonnummer')
     street_name = models.CharField(max_length=100, null=False, blank=False, verbose_name='Straße')
@@ -60,6 +62,19 @@ class MemberApplication(models.Model):
     is_new = models.BooleanField(default=True, editable=False, verbose_name='neu ?')
 
     def save(self, *args, **kwargs):
+        # Generate verify code
+        self.verify_code = get_random_string(64)
+
+        # Send Email to new Member
+        if not self.pk:
+            send_mail(_('Bestätige deinen Mitgliedsantrag für Studylife München e.V. '),
+                      _('Dein Mitgliedsantrag ist eingegangen. '
+                        'Bitte bestätige deinen Mitgliedsantrag mit '
+                        'einem Klick auf folgenden Link https://studylife-muenchen.de/verify/{}'.format(self.verification_code)),
+                      'noreply@studylife-muenchen.de',
+                      [self.email])
+        print('https://studylife-muenchen.de/verify/{}'.format(self.verification_code))
+
         # Notfify baord members about new applications
         if not self.pk:
             Member = apps.get_model('member', 'Member')
@@ -71,6 +86,10 @@ class MemberApplication(models.Model):
                             'Um den Antrag zu sehen gehe auf: https://studylife-muenchen.de'.format(self.first_name, self.last_name)),
                           'noreply@studylife-muenchen.de',
                           [member.email])
+
+        # Ensure group name is not longer than 80 characters
+
+
         return super(MemberApplication, self).save(*args, **kwargs)
 
     def __str__(self):

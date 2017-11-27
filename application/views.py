@@ -11,6 +11,8 @@ from django.template.response import TemplateResponse
 from application.forms import CaptchaLoginForm
 from django.contrib.auth import login
 
+from application.models import MemberApplication
+
 
 def index(request):
     # if this is a POST request we need to process the form data
@@ -73,6 +75,12 @@ def index(request):
 
 def impressum(request):
     return TemplateResponse(request, "impressum.html",{})
+
+def verify(request, verification_code):
+    # Try to get member application associated to this hash
+    member = MemberApplication.objects.get(verification_code=verification_code)
+    print(member)
+    return TemplateResponse(request, "impressum.html", {})
 
 
 
