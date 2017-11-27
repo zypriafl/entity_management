@@ -34,7 +34,7 @@ class MemberApplication(models.Model):
 
     first_name = models.CharField(max_length=100, null=False, blank=False, verbose_name='Vorname')
     last_name = models.CharField(max_length=100, null=False, blank=False, verbose_name='Nachname')
-    email = models.EmailField(null=False, blank=False, verbose_name='Email Adresse')
+    email = models.EmailField(null=False, blank=False, unique=True, verbose_name='Email Adresse')
     birthday = models.DateField(null=False, blank=False, verbose_name='Geburtsdatum')
     phone_number = models.CharField(max_length=50, null=False, blank=False, verbose_name='Telefonnummer')
     street_name = models.CharField(max_length=100, null=False, blank=False, verbose_name='Straße')
