@@ -47,7 +47,7 @@ def csv_export(modeladmin, request, queryset):
 
 
 class MemberAdmin(admin.ModelAdmin):
-    list_display = ('__str__', 'first_name', 'last_name', 'email', 'membership_type', 'position_type')
+    list_display = ('__str__', 'first_name', 'last_name', 'email', 'member_since', 'membership_type', 'position_type')
     readonly_fields = ('application_form', 'created_at', 'updated_at')
     list_filter = ('membership_type',)
     actions = [csv_export]

@@ -61,6 +61,7 @@ class Member(models.Model):
     class Meta:
         verbose_name = _('Mitglied')
         verbose_name_plural = _('Mitglieder')
+        ordering = ['-last_name']
 
     def __str__(self):
         return '{} {}'.format(self.first_name, self.last_name)
