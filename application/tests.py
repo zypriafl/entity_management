@@ -65,4 +65,27 @@ class MemberTests(TestCase):
         self.assertFalse(application.is_new)
         self.assertEqual(application, member.application_form)
 
+    def test_verify(self):
+        verification_url = reverse('verify', kwargs={'verification_code': self.application.verification_code})
+        self.assertFalse(self.application.is_verified)
+        response = self.client.get(verification_url)
+
+        self.assertEqual(response.content.decode('utf-8'),
+                         ('Dein Mitgliedsantrag wurde bestätigt. '
+                          'Wir werden diesen nun prüfen und melden uns bald bei dir.'))
+
+        application = MemberApplication.objects.get(email='florian.zyprian@example.org')
+        self.assertTrue(application.is_verified)
+
+        response = self.client.get(verification_url)
+        self.assertEqual(response.content.decode('utf-8'),
+                         ('Mitgliedsantrag wurde bereits bestätigt.'))
+
+        invalid_verification_url = reverse('verify', kwargs={'verification_code': 'hsufdkshfkjshkj'})
+        response = self.client.get(invalid_verification_url)
+        self.assertEqual(response.content.decode('utf-8'),
+                         ('Fehler: Üngultiger Code'))
+
+
+
 

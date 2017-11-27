@@ -2,7 +2,8 @@
 from __future__ import unicode_literals
 
 from django.contrib.auth.models import User
-from django.http import HttpResponseRedirect
+from django.core.exceptions import ObjectDoesNotExist
+from django.http import HttpResponseRedirect, HttpResponse
 from django.utils.translation import ugettext_lazy as _
 
 # Create your views here.
@@ -67,7 +68,7 @@ def index(request):
     form = CaptchaLoginForm()
     return TemplateResponse(request, 
         "application/index.html", 
-        {'form': form, 
+        {'form': form,
         'site_header': _('Studylife München e.V.'),
         'site_title': _('Studylife München e.V.'),
         'title': _('Verwaltung')})
@@ -76,10 +77,29 @@ def index(request):
 def impressum(request):
     return TemplateResponse(request, "impressum.html",{})
 
+
 def verify(request, verification_code):
     # Try to get member application associated to this hash
-    member = MemberApplication.objects.get(verification_code=verification_code)
-    print(member)
+    try:
+        application = MemberApplication.objects.get(verification_code=verification_code)
+
+        if application.is_verified:
+            # Return already verified
+            message = _('Mitgliedsantrag wurde bereits bestätigt.')
+            return HttpResponse(message)
+
+        else :
+            # Verifiy application
+            application.is_verified = True
+            application.save()
+
+            message = _('Dein Mitgliedsantrag wurde bestätigt. Wir werden diesen nun prüfen und melden uns bald bei dir.')
+            return HttpResponse(message)
+
+    except ObjectDoesNotExist as e:
+        message = _('Fehler: Üngultiger Code')
+        return HttpResponse(message, status=400)
+
     return TemplateResponse(request, "impressum.html", {})
 
 

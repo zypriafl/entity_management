@@ -57,7 +57,7 @@ def make_new(modeladmin, request, queryset):
 
 
 class MemberApplicationAdmin(admin.ModelAdmin):
-    list_display = ('__str__', 'first_name', 'last_name', 'email', 'membership_type', 'is_new')
+    list_display = ('__str__', 'first_name', 'last_name', 'email', 'membership_type', 'is_new', 'is_verified')
     list_filter = ('is_new',)
     readonly_fields = ('created_at', 'updated_at')
     actions = [make_done, make_new, accept]

@@ -37,6 +37,7 @@ class MemberApplication(models.Model):
     last_name = models.CharField(max_length=100, null=False, blank=False, verbose_name='Nachname')
     email = models.EmailField(null=False, blank=False, unique=True, verbose_name='Email Adresse')
     verification_code = models.CharField(max_length=64, null=False, unique=True, editable=False)
+
     birthday = models.DateField(null=False, blank=False, verbose_name='Geburtsdatum')
     phone_number = models.CharField(max_length=50, null=False, blank=False, verbose_name='Telefonnummer')
     street_name = models.CharField(max_length=100, null=False, blank=False, verbose_name='Straße')
@@ -60,22 +61,40 @@ class MemberApplication(models.Model):
     updated_at = models.DateTimeField(auto_now=True, verbose_name=_('geändert am'))
 
     is_new = models.BooleanField(default=True, editable=False, verbose_name='neu ?')
+    is_verified = models.BooleanField(default=False, editable=False, verbose_name='Bestätigt via Email ?')
 
     def save(self, *args, **kwargs):
-        # Generate verify code
-        self.verify_code = get_random_string(64)
+        # Generate verify code if not exist yet
+        if not self.verification_code:
+            self.verification_code = get_random_string(64)
+
+        # Load board members that needs to notified
+        Member = apps.get_model('member', 'Member')
+        board_member = (Member.objects.filter(position_type__isnull=False))
 
         # Send Email to new Member
         if not self.pk:
             send_mail(_('Bestätige deinen Mitgliedsantrag für Studylife München e.V. '),
                       _('Dein Mitgliedsantrag ist eingegangen. '
                         'Bitte bestätige deinen Mitgliedsantrag mit '
-                        'einem Klick auf folgenden Link https://studylife-muenchen.de/verify/{}'.format(self.verification_code)),
+                        'einem Klick auf folgenden Link https://studylife-muenchen.de/verify/{}/'.format(self.verification_code)),
                       'noreply@studylife-muenchen.de',
                       [self.email])
-        print('https://studylife-muenchen.de/verify/{}'.format(self.verification_code))
+        #print('https://studylife-muenchen.de/verify/{}/'.format(self.verification_code))
 
-        # Notfify baord members about new applications
+        # Notfify board members about verified applications
+        if self.pk:
+            old_self = MemberApplication.objects.get(email=self.email)
+            if not old_self.is_verified and self.is_verified:
+                for member in board_member:
+                    send_mail(_('Bestätigung eines Mitgliedsantrag für Studylife München e.V. '),
+                              _('Der Mitgliedsantrag von {} {} würde bestätigt. '
+                                'Um den Antrag zu bearbeiten gehe auf: https://studylife-muenchen.de'.format(self.first_name,
+                                                                                                        self.last_name)),
+                              'noreply@studylife-muenchen.de',
+                              [member.email])
+
+        # Notfify board members about new applications
         if not self.pk:
             Member = apps.get_model('member', 'Member')
             board_member = (Member.objects.filter(position_type__isnull=False))
@@ -83,13 +102,11 @@ class MemberApplication(models.Model):
             for member in board_member:
                 send_mail(_('Neuer Mitgliedsantrag für Studylife München e.V. '),
                           _('Neuer Mitgliedsantrag von {} {} eingegangen. '
-                            'Um den Antrag zu sehen gehe auf: https://studylife-muenchen.de'.format(self.first_name, self.last_name)),
+                            'Um den Antrag zu bearbeiten gehe auf: https://studylife-muenchen.de'.format(self.first_name, self.last_name)),
                           'noreply@studylife-muenchen.de',
                           [member.email])
 
         # Ensure group name is not longer than 80 characters
-
-
         return super(MemberApplication, self).save(*args, **kwargs)
 
     def __str__(self):
