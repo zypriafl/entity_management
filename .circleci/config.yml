@@ -49,3 +49,13 @@ jobs:
       - store_artifacts:
           path: test-reports
           destination: test-reports
+
+      - deploy:
+          branch: master
+          command: |
+            . venv/bin/activate
+            fab staging git_pull
+            fab staging install_requirements
+            fab staging deploy
+            fab staging migrate
+            fab staging restart_server
