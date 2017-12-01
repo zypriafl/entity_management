@@ -32,7 +32,7 @@ def restart_server():
     """
     restarts supervisor
     """
-    sudo("supervisorctl restart %(project_name)s" % env)
+    run("supervisorctl restart %(project_name)s" % env)
 
 
 def install_requirements():
