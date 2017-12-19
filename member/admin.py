@@ -76,7 +76,8 @@ def csv_export(modeladmin, request, queryset):
     response = HttpResponse(content_type='text/csv')
     response['Content-Disposition'] = 'attachment; filename="mitglieder.csv"'
     writer = csv.writer(response)
-    writer.writerow(['Vorname',
+    writer.writerow(['Geschlecht',
+                     'Vorname',
                      'Nachname',
                      'Email',
                      'Geburtsdatum',
@@ -93,7 +94,9 @@ def csv_export(modeladmin, request, queryset):
                      ])
 
     for member in queryset:
-        writer.writerow([member.first_name,
+        writer.writerow([
+                        member.gender,
+                        member.first_name,
                         member.last_name,
                         member.email,
                         member.birthday,
@@ -112,7 +115,7 @@ def csv_export(modeladmin, request, queryset):
 
 
 class MemberAdmin(admin.ModelAdmin):
-    list_display = ('__str__', 'first_name', 'last_name', 'email', 'member_since', 'membership_type', 'position_type')
+    list_display = ('__str__', 'gender', 'first_name', 'last_name', 'email', 'member_since', 'membership_type', 'position_type')
     readonly_fields = ('application_form', 'created_at', 'updated_at')
     list_filter = ('membership_type',)
     actions = [csv_export]
