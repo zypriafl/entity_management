@@ -5,5 +5,5 @@ from captcha.fields import ReCaptchaField
 
 
 class CaptchaLoginForm(forms.Form):
-    secret_answer = forms.CharField(label=_('Login-Frage: Welche universitäre Sportveranstaltung gefällt uns am besten?'))
+    #secret_answer = forms.CharField(label=_('Login-Frage: Welche universitäre Sportveranstaltung gefällt uns am besten?'))
     captcha = ReCaptchaField(label='')

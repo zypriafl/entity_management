@@ -1,5 +1,6 @@
 Django
 django-flat-responsive
+django-localflavor
 django-recaptcha
 pytz
 fabric3

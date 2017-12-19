@@ -22,6 +22,9 @@ class MemberTests(TestCase):
         my_admin = User.objects.create_superuser('my_admin', 'my_admin@example.org', 'password')
         self.client.login(username=my_admin.username, password='password')
 
+        self.example_iban = 'DE 89 37040044 0532013000'.replace(' ', '')
+        self.example_bic = '37040044'
+
         # Create new Application
         application = MemberApplication()
         application.first_name = 'Florian'
@@ -34,6 +37,8 @@ class MemberTests(TestCase):
         application.postal_code ='124456'
         application.city = 'A City'
         application.country = 'A Country'
+        application.iban = self.example_iban
+        application.bic = self.example_bic
         application.membership_type = 'Aktive'
         application.save()
 
@@ -60,6 +65,9 @@ class MemberTests(TestCase):
         self.assertEqual(member.first_name, 'Florian')
         self.assertEqual(member.last_name, 'Zyprian')
         self.assertEqual(member.email, 'florian.zyprian@example.org')
+
+        self.assertEqual(member.iban, self.example_iban)
+        self.assertEqual(member.bic, self.example_bic)
 
         application = MemberApplication.objects.get(email='florian.zyprian@example.org')
         self.assertFalse(application.is_new)

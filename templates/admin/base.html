@@ -71,10 +71,16 @@
     <div id="content" class="{% block coltype %}colM{% endblock %}">
         {% block pretitle %}{% endblock %}
         {% block content_title %}{% if title %}<h1>{{ title }}</h1>{% endif %}{% endblock %}
+
+        {% ifequal title 'Mitgliedsantrag hinzufügen' %}
+            <h2>Maria sagt Bescheid was da hinnkommt</h2>
+        {% endifequal %}
+
         {% block content %}
         {% block object-tools %}{% endblock %}
         {{ content }}
         {% endblock %}
+
         {% if user.is_active and user.super_user %}
             {% block sidebar %}{% endblock %}
         {% endif %}

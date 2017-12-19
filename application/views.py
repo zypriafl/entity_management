@@ -22,28 +22,28 @@ def index(request):
         form = CaptchaLoginForm(request.POST)
         # check whether it's valid:
         if form.is_valid():
-            secret_answer = form.cleaned_data['secret_answer']
+            #secret_answer = form.cleaned_data['secret_answer']
 
             # Accept Euromasters, Championstrophy, Snowdays and
             # Royalscup independently from spacing and cases
-            if \
-                ('euro' in secret_answer.lower() and
-                'master' in secret_answer.lower()) \
-                    or \
-                ('champions' in secret_answer.lower() and
-                 'trophy' in secret_answer.lower()) \
-                    or \
-                ('snow' in secret_answer.lower() and
-                 'day' in secret_answer.lower()) \
-                    or \
-                ('royal' in secret_answer.lower() and
-                 'cup' in secret_answer.lower()):
-
+            # if \
+            #     ('euro' in secret_answer.lower() and
+            #     'master' in secret_answer.lower()) \
+            #         or \
+            #     ('champions' in secret_answer.lower() and
+            #      'trophy' in secret_answer.lower()) \
+            #         or \
+            #     ('snow' in secret_answer.lower() and
+            #      'day' in secret_answer.lower()) \
+            #         or \
+            #     ('royal' in secret_answer.lower() and
+            #      'cup' in secret_answer.lower()):
+            if True:
                 # login visitor user
                 user = User.objects.get(username='visitor')
                 user.backend = 'django.contrib.auth.backends.ModelBackend'
                 login(request, user)
-                return HttpResponseRedirect('/admin/')
+                return HttpResponseRedirect('/admin/application/memberapplication/add/')
 
             else:
                 # Question not answered correctly.
@@ -104,3 +104,9 @@ def verify(request, verification_code):
 
 
 
+from django.contrib.auth import logout
+
+
+def logout_view(request):
+    logout(request)
+    return HttpResponseRedirect('/admin/login/?next=/admin/')

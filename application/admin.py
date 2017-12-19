@@ -37,6 +37,8 @@ def accept(modeladmin, request, queryset):
     member.postal_code = application.postal_code
     member.city = application.city
     member.country = application.country
+    member.iban = application.iban
+    member.bic = application.bic
     member.membership_type = application.membership_type
     member.member_since = timezone.now()
 
