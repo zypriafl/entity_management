@@ -72,11 +72,6 @@ class MemberApplication(models.Model):
                                              null=False,
                                              blank=False,
                                              validators=[validate_true],
-                                             verbose_name=('Ich möchte zum nächstmöglichen Zeitpunkt Mitglied im Studylife München e.V werden und akzeptiere die aktuelle Beitragsordnung. '
-                                                            'Die Beitragshöhe für aktive Mitglieder beträgt 1€ monatlich. Mitglieder die zusätzlich in der'
-                                                            'Abteilung „Cheerleading“ aktiv sind, müssen insgesamt einen Betrag von 3€ monatlich verrichten. '
-                                                            'Um den Mitgliedsantrag abzuschicken klicke auf "Sichern".'
-                                                            )
                                              )
 
     created_at = models.DateTimeField(auto_now_add=True, verbose_name=_('erstellt am'))
