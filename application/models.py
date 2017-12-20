@@ -49,19 +49,19 @@ class MemberApplication(models.Model):
     first_name = models.CharField(max_length=100, null=False, blank=False, verbose_name='Vorname')
     last_name = models.CharField(max_length=100, null=False, blank=False, verbose_name='Nachname')
     gender = models.CharField(max_length=50, null=True, blank=False, choices=GENDERS, verbose_name='Geschlecht')
-    email = models.EmailField(null=False, blank=False, unique=True, verbose_name='Email Adresse')
+    email = models.EmailField(null=False, blank=False, unique=True, verbose_name='E-Mail Adresse')
     verification_code = models.CharField(max_length=64, null=False, unique=True, editable=False)
 
     birthday = models.DateField(null=False, blank=False, verbose_name='Geburtsdatum')
     phone_number = models.CharField(max_length=50, null=False, blank=False, verbose_name='Telefonnummer')
-    street_name = models.CharField(max_length=100, null=False, blank=False, verbose_name='Straße', help_text='Bitte deine München Addresse angeben (falls vorhanden).')
-    street_number = models.CharField(max_length=25, null=False, blank=False, verbose_name='Hausnummer', help_text='Bitte deine München Addresse angeben (falls vorhanden).')
-    postal_code = models.CharField(max_length=25, null=False, blank=False, verbose_name='Postleitzahl', help_text='Bitte deine München Addresse angeben (falls vorhanden).')
-    city = models.CharField(max_length=100, null=False, blank=False, verbose_name='Stadt', help_text='Bitte deine München Addresse angeben (falls vorhanden).')
+    street_name = models.CharField(max_length=100, null=False, blank=False, verbose_name='Straße', help_text='Bitte die Münchner Adresse angeben (falls vorhanden).')
+    street_number = models.CharField(max_length=25, null=False, blank=False, verbose_name='Hausnummer', help_text='Bitte die Münchner Adresse angeben (falls vorhanden).')
+    postal_code = models.CharField(max_length=25, null=False, blank=False, verbose_name='Postleitzahl', help_text='Bitte die Münchner Adresse angeben (falls vorhanden).')
+    city = models.CharField(max_length=100, null=False, blank=False, verbose_name='Stadt', help_text='Bitte die Münchner Adresse angeben (falls vorhanden).')
     country = models.CharField(max_length=100, null=False, blank=False, default='Deutschland', verbose_name='Land')
 
-    iban = IBANField(include_countries=IBAN_SEPA_COUNTRIES, null=True, blank=True, verbose_name='Deine IBAN')
-    bic = BICField( null=True, blank=True, verbose_name='Deine BIC')
+    iban = IBANField(include_countries=IBAN_SEPA_COUNTRIES, null=True, verbose_name='Deine IBAN')
+    bic = BICField(null=True, verbose_name='Deine BIC')
 
     membership_type = models.CharField(max_length=50,
                                        null=False,

@@ -33,7 +33,7 @@ class Member(models.Model):
                               blank=False,
                               choices=MemberApplication.GENDERS,
                               verbose_name='Geschlecht')
-    email = models.EmailField(null=False, blank=False, verbose_name=_('Email Adresse'))
+    email = models.EmailField(null=False, blank=False, verbose_name=_('E-Mail Adresse'))
     birthday = models.DateField(null=False, blank=False, verbose_name=_('Geburtsdatum'))
     phone_number = models.CharField(max_length=50, null=False, blank=False, verbose_name=_('Telefonnummer'))
     street_name = models.CharField(max_length=100, null=False, blank=False, verbose_name=_('Straße'))
