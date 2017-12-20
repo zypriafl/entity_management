@@ -26,13 +26,13 @@ class Member(models.Model):
     )
 
     # Fields that can be populated via the ApplicationForm
+    first_name = models.CharField(max_length=100, null=False, blank=False, verbose_name=_('Vorname'))
+    last_name = models.CharField(max_length=100, null=False, blank=False, verbose_name=_('Nachname'))
     gender = models.CharField(max_length=50,
                               null=True,
                               blank=False,
                               choices=MemberApplication.GENDERS,
                               verbose_name='Geschlecht')
-    first_name = models.CharField(max_length=100, null=False, blank=False, verbose_name=_('Vorname'))
-    last_name = models.CharField(max_length=100, null=False, blank=False, verbose_name=_('Nachname'))
     email = models.EmailField(null=False, blank=False, verbose_name=_('Email Adresse'))
     birthday = models.DateField(null=False, blank=False, verbose_name=_('Geburtsdatum'))
     phone_number = models.CharField(max_length=50, null=False, blank=False, verbose_name=_('Telefonnummer'))
@@ -42,8 +42,8 @@ class Member(models.Model):
     city = models.CharField(max_length=100, null=False, blank=False, verbose_name=_('Stadt'))
     country = models.CharField(max_length=100, null=False, blank=False, verbose_name=_('Land'))
 
-    iban = IBANField(include_countries=IBAN_SEPA_COUNTRIES, null=True, blank=True, verbose_name='Deine IBAN')
-    bic = BICField(verbose_name='Deine BIC', null=True, blank=True)
+    iban = IBANField(include_countries=IBAN_SEPA_COUNTRIES, null=True, blank=True, verbose_name='IBAN')
+    bic = BICField(verbose_name='BIC', null=True, blank=True)
 
     membership_type = models.CharField(max_length=50,
                                        null=False,

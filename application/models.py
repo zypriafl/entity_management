@@ -46,10 +46,10 @@ class MemberApplication(models.Model):
         (MALE, _('Mann')),
     )
 
-    gender = models.CharField(max_length=50, null=True, blank=False, choices=GENDERS, verbose_name='Geschlecht')
     first_name = models.CharField(max_length=100, null=False, blank=False, verbose_name='Vorname')
     last_name = models.CharField(max_length=100, null=False, blank=False, verbose_name='Nachname')
-    email = models.EmailField(null=False, blank=False, unique=True, verbose_name='Email Adresse', help_text='Bitte deine TUM Adresse angeben (falls vorhanden)')
+    gender = models.CharField(max_length=50, null=True, blank=False, choices=GENDERS, verbose_name='Geschlecht')
+    email = models.EmailField(null=False, blank=False, unique=True, verbose_name='Email Adresse')
     verification_code = models.CharField(max_length=64, null=False, unique=True, editable=False)
 
     birthday = models.DateField(null=False, blank=False, verbose_name='Geburtsdatum')
