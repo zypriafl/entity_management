@@ -24,11 +24,13 @@ class MemberTests(TestCase):
 
         self.example_iban = 'DE 89 37040044 0532013000'.replace(' ', '')
         self.example_bic = '37040044'
+        self.gender = MemberApplication.MALE
 
         # Create new Application
         application = MemberApplication()
         application.first_name = 'Florian'
         application.last_name = 'Zyprian'
+        application.gender = self.gender
         application.email = 'florian.zyprian@example.org'
         application.birthday = timezone.now()
         application.phone_number = '0123456789'
@@ -65,6 +67,7 @@ class MemberTests(TestCase):
         self.assertEqual(member.first_name, 'Florian')
         self.assertEqual(member.last_name, 'Zyprian')
         self.assertEqual(member.email, 'florian.zyprian@example.org')
+        self.assertEqual(member.gender, self.gender)
 
         self.assertEqual(member.iban, self.example_iban)
         self.assertEqual(member.bic, self.example_bic)
