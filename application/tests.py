@@ -11,6 +11,8 @@ from django.utils import timezone
 from application.models import MemberApplication
 from member.models import Member
 
+from application.templatetags.description import TOP_DESCRIPTION, BOTTOM_DESCRIPTION
+
 
 class MemberTests(TestCase):
     """
@@ -76,7 +78,7 @@ class MemberTests(TestCase):
         self.assertFalse(application.is_new)
         self.assertEqual(application, member.application_form)
 
-    def test_verify(self):
+    def test_verify_email_accept(self):
         verification_url = reverse('verify', kwargs={'verification_code': self.application.verification_code})
         self.assertFalse(self.application.is_verified)
         response = self.client.get(verification_url)
@@ -85,17 +87,27 @@ class MemberTests(TestCase):
                          ('Dein Mitgliedsantrag wurde bestätigt. '
                           'Wir werden diesen nun prüfen und melden uns bald bei dir.'))
 
-        application = MemberApplication.objects.get(email='florian.zyprian@example.org')
+        application = MemberApplication.objects.get(id=self.application.id)
         self.assertTrue(application.is_verified)
 
-        response = self.client.get(verification_url)
-        self.assertEqual(response.content.decode('utf-8'),
-                         ('Mitgliedsantrag wurde bereits bestätigt.'))
+    def test_verify_email_accepted_already(self):
+        verification_url = reverse('verify', kwargs={'verification_code': self.application.verification_code})
+        self.application.is_verified = True
+        self.application.save()
 
+        response = self.client.get(verification_url)
+        self.assertEqual(response.content.decode('utf-8'), ('Mitgliedsantrag wurde bereits bestätigt.'))
+
+    def test_verify_email_invalid(self):
         invalid_verification_url = reverse('verify', kwargs={'verification_code': 'hsufdkshfkjshkj'})
         response = self.client.get(invalid_verification_url)
-        self.assertEqual(response.content.decode('utf-8'),
-                         ('Fehler: Üngultiger Code'))
+        self.assertEqual(response.content.decode('utf-8'), ('Fehler: Üngultiger Code'))
+
+    def test_application_form(self):
+        form_url = reverse('admin:application_memberapplication_add')
+        response = self.client.get(form_url)
+        self.assertContains(response, TOP_DESCRIPTION)
+        self.assertContains(response, BOTTOM_DESCRIPTION)
 
 
 

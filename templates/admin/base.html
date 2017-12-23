@@ -73,10 +73,8 @@
         {% block content_title %}{% if title %}<h1>{{ title }}</h1>{% endif %}{% endblock %}
 
         {% ifequal title 'Mitgliedsantrag hinzufügen' %}
-            <h2>Wir freuen uns über dein Interesse Mitglied im Studylife München e.V. zu werden.
-                Bitte fülle dazu den Antrag aus und klicke anschließend auf sichern.
-                Wenn du Teil unseres Cheerleading Teams bist, gib das bitte bei der Art der Mitgliedschaft an,
-                du wirst dann automatisch auch Mitglied der Cheerleading Abteilung.</h2>
+        {% load description %}
+            {% top_description %}
         {% endifequal %}
 
         {% block content %}
