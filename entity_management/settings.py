@@ -43,6 +43,7 @@ INSTALLED_APPS = [
 
     'application',
     'member',
+    'email_template',
 
     'captcha',
 ]
