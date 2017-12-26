@@ -1,4 +1,5 @@
 import os
+
 from entity_management.settings import *
 
 # Server Settings
@@ -20,7 +21,7 @@ EMAIL_HOST_PASSWORD = os.environ['EMAIL_HOST_PASSWORD'] #'7QwslqAOjvoQmYxO7S'
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587
 ADMINS = [admin for admin in os.environ['ADMINS'].split(', ')]
-SERVER_EMAIL ='noreply@studylife-muenchen.de'
+SERVER_EMAIL = 'noreply@studylife-muenchen.de'
 
 
 # Uberspace static dir

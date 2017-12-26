@@ -2,17 +2,16 @@
 from __future__ import unicode_literals
 
 from django.contrib.auth.models import User
-from django.test import TestCase, client, Client
 from django.core.urlresolvers import reverse
-
+from django.test import Client, TestCase, client
 # Create your tests here.
 from django.utils import timezone
 
 from application.models import MemberApplication
+from application.templatetags.description import (BOTTOM_DESCRIPTION,
+                                                  TOP_DESCRIPTION)
 from member.models import Member
-
-from application.templatetags.description import TOP_DESCRIPTION, BOTTOM_DESCRIPTION
-
+from django.core import mail
 
 class MemberTests(TestCase):
     """
@@ -24,16 +23,30 @@ class MemberTests(TestCase):
         my_admin = User.objects.create_superuser('my_admin', 'my_admin@example.org', 'password')
         self.client.login(username=my_admin.username, password='password')
 
+        # Create Board Member
+        Member.objects.create(
+            first_name='Max',
+            last_name='Mustermann',
+            gender=MemberApplication.MALE,
+            email='max.mustermann@example.org',
+            birthday=timezone.now(),
+            member_since=timezone.now(),
+            position_type='Vorstand'
+        )
+
+        # Create new Application
+        self.first_name = 'Florian'
+        self.last_name = 'Zyprian'
+        self.email = 'florian.zyprian@example.org'
         self.example_iban = 'DE 89 37040044 0532013000'.replace(' ', '')
         self.example_bic = '37040044'
         self.gender = MemberApplication.MALE
 
-        # Create new Application
         application = MemberApplication()
-        application.first_name = 'Florian'
-        application.last_name = 'Zyprian'
+        application.first_name = self.first_name
+        application.last_name = self.last_name
         application.gender = self.gender
-        application.email = 'florian.zyprian@example.org'
+        application.email = self.email
         application.birthday = timezone.now()
         application.phone_number = '0123456789'
         application.street_name = 'A Street'
@@ -49,6 +62,15 @@ class MemberTests(TestCase):
         self.application = application
 
     def test_application_creation(self):
+        """
+        Test that an application was created and an email was send out
+        :return:
+        """
+        # Test that one message has been sent to the member and one to the board member.
+        self.assertEqual(len(mail.outbox), 2)
+        self.assertEqual(mail.outbox[0].subject, 'Bestätige deinen Mitgliedsantrag für Studylife München e.V.')
+        self.assertEqual(mail.outbox[1].subject, 'Neuer Mitgliedsantrag für Studylife München e.V.')
+
         self.assertEqual(len(MemberApplication.objects.all()), 1)
 
     def test_create_member_from_application(self):
@@ -56,6 +78,8 @@ class MemberTests(TestCase):
         Given a application an admin want to create a Member
         :return:
         """
+        # Empty the test outbox
+        mail.outbox = []
         self.assertTrue(self.application.is_new)
 
         change_url = reverse('admin:application_memberapplication_changelist')
@@ -66,11 +90,10 @@ class MemberTests(TestCase):
         member = Member.objects.get(email='florian.zyprian@example.org')
 
         self.assertEqual(response.status_code, 302)
-        self.assertEqual(member.first_name, 'Florian')
-        self.assertEqual(member.last_name, 'Zyprian')
-        self.assertEqual(member.email, 'florian.zyprian@example.org')
+        self.assertEqual(member.first_name, self.first_name)
+        self.assertEqual(member.last_name, self.last_name)
+        self.assertEqual(member.email, self.email)
         self.assertEqual(member.gender, self.gender)
-
         self.assertEqual(member.iban, self.example_iban)
         self.assertEqual(member.bic, self.example_bic)
 
@@ -78,7 +101,20 @@ class MemberTests(TestCase):
         self.assertFalse(application.is_new)
         self.assertEqual(application, member.application_form)
 
+        # Test that one message has been sent to the member.
+        self.assertEqual(len(mail.outbox), 1)
+        self.assertEqual(mail.outbox[0].subject, 'Deine Mitgliedschaft im Studylife München e.V.')
+
+        body_string =('Hallo Florian,\n'
+                'danke für deinen Mitgliedsantrag. Wir haben dich in den Verein aufgenommen.\n'
+                '\n'
+                'Beste Grüße\n'
+                'dein Vorstand des Studylife München e.V.\n')
+        self.assertEqual(mail.outbox[0].body, body_string)
+
     def test_verify_email_accept(self):
+        # Empty the test outbox
+        mail.outbox = []
         verification_url = reverse('verify', kwargs={'verification_code': self.application.verification_code})
         self.assertFalse(self.application.is_verified)
         response = self.client.get(verification_url)
@@ -90,13 +126,23 @@ class MemberTests(TestCase):
         application = MemberApplication.objects.get(id=self.application.id)
         self.assertTrue(application.is_verified)
 
+        # Test that one message has been sent to the member and one to the board member.
+        self.assertEqual(len(mail.outbox), 1)
+        self.assertEqual(mail.outbox[0].subject, 'Bestätigung eines Mitgliedsantrag für Studylife München e.V.')
+
     def test_verify_email_accepted_already(self):
         verification_url = reverse('verify', kwargs={'verification_code': self.application.verification_code})
         self.application.is_verified = True
         self.application.save()
 
+        # Empty the test outbox
+        mail.outbox = []
+
         response = self.client.get(verification_url)
         self.assertEqual(response.content.decode('utf-8'), ('Mitgliedsantrag wurde bereits bestätigt.'))
+
+        # Test that no message has been sent.
+        self.assertEqual(len(mail.outbox), 0)
 
     def test_verify_email_invalid(self):
         invalid_verification_url = reverse('verify', kwargs={'verification_code': 'hsufdkshfkjshkj'})
@@ -108,7 +154,3 @@ class MemberTests(TestCase):
         response = self.client.get(form_url)
         self.assertContains(response, TOP_DESCRIPTION)
         self.assertContains(response, BOTTOM_DESCRIPTION)
-
-
-
-

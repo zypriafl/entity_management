@@ -1,16 +1,15 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-from django.utils import timezone
-
 from django.contrib import admin
-from django.http import JsonResponse, HttpResponse
+from django.core.mail import send_mail
+from django.http import HttpResponse, JsonResponse
+from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
 
 # Register your models here.
 from application.models import MemberApplication
 from member.models import Member
-
 
 
 def accept(modeladmin, request, queryset):
@@ -49,6 +48,16 @@ def accept(modeladmin, request, queryset):
     # Mark as done
     application.is_new = False
     application.save()
+
+    # Send E-Mail to new Member
+    send_mail(_('Deine Mitgliedschaft im Studylife München e.V.'),
+              _('Hallo {first_name},\n'
+                'danke für deinen Mitgliedsantrag. Wir haben dich in den Verein aufgenommen.\n'
+                '\n'
+                'Beste Grüße\n'
+                'dein Vorstand des Studylife München e.V.\n'.format(first_name=member.first_name)),
+              'noreply@studylife-muenchen.de',
+              [member.email])
 
 
 def make_done(modeladmin, request, queryset):

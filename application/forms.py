@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
+from captcha.fields import ReCaptchaField
 from django import forms
 from django.utils.translation import ugettext_lazy as _
-from captcha.fields import ReCaptchaField
 
 
 class CaptchaLoginForm(forms.Form):

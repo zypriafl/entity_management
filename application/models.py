@@ -2,17 +2,16 @@
 from __future__ import unicode_literals
 
 from django.apps import apps
-from django.core.mail import mail_managers, mail_admins, send_mail
+from django.core.exceptions import ValidationError
+from django.core.mail import mail_admins, mail_managers, send_mail
 from django.db import models
 from django.utils.crypto import get_random_string
 from django.utils.html import format_html
 from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext_lazy as _
-from localflavor.generic.models import IBANField, BICField
 from localflavor.generic.countries.sepa import IBAN_SEPA_COUNTRIES
+from localflavor.generic.models import BICField, IBANField
 
-from django.core.exceptions import ValidationError
-from django.utils.translation import ugettext_lazy as _
 
 def validate_true(value):
     if not value:
@@ -87,37 +86,36 @@ class MemberApplication(models.Model):
 
         # Load board members that needs to notified
         Member = apps.get_model('member', 'Member')
-        board_member = (Member.objects.filter(position_type__isnull=False))
+        board_members = (Member.objects.filter(position_type__isnull=False))
 
         # Send Email to new Member
         if not self.pk:
-            send_mail(_('Bestätige deinen Mitgliedsantrag für Studylife München e.V. '),
+            send_mail(_('Bestätige deinen Mitgliedsantrag für Studylife München e.V.'),
                       _('Dein Mitgliedsantrag ist eingegangen. '
                         'Bitte bestätige deinen Mitgliedsantrag mit '
                         'einem Klick auf folgenden Link https://studylife-muenchen.de/verify/{}/'.format(self.verification_code)),
                       'noreply@studylife-muenchen.de',
                       [self.email])
-        #print('https://studylife-muenchen.de/verify/{}/'.format(self.verification_code))
 
-        # Notfify board members about verified applications
+        # Notify board members about verified applications
         if self.pk:
             old_self = MemberApplication.objects.get(email=self.email)
             if not old_self.is_verified and self.is_verified:
-                for member in board_member:
-                    send_mail(_('Bestätigung eines Mitgliedsantrag für Studylife München e.V. '),
+                for board_member in board_members:
+                    send_mail(_('Bestätigung eines Mitgliedsantrag für Studylife München e.V.'),
                               _('Der Mitgliedsantrag von {} {} würde bestätigt. '
                                 'Um den Antrag zu bearbeiten gehe auf: https://studylife-muenchen.de'.format(self.first_name,
                                                                                                         self.last_name)),
                               'noreply@studylife-muenchen.de',
-                              [member.email])
+                              [board_member.email])
 
-        # Notfify board members about new applications
+        # Notify board members about new applications
         if not self.pk:
             Member = apps.get_model('member', 'Member')
             board_member = (Member.objects.filter(position_type__isnull=False))
 
             for member in board_member:
-                send_mail(_('Neuer Mitgliedsantrag für Studylife München e.V. '),
+                send_mail(_('Neuer Mitgliedsantrag für Studylife München e.V.'),
                           _('Neuer Mitgliedsantrag von {} {} eingegangen. '
                             'Um den Antrag zu bearbeiten gehe auf: https://studylife-muenchen.de'.format(self.first_name, self.last_name)),
                           'noreply@studylife-muenchen.de',
@@ -128,7 +126,6 @@ class MemberApplication(models.Model):
 
     def __str__(self):
         return 'Mitgliedsantrag vom {:%d.%m.%Y}'.format(self.created_at)
-
 
     class Meta:
         verbose_name = _('Mitgliedsantrag')

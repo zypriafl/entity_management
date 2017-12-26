@@ -1,17 +1,15 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
+from django.contrib.auth import login, logout
 from django.contrib.auth.models import User
 from django.core.exceptions import ObjectDoesNotExist
-from django.http import HttpResponseRedirect, HttpResponse
-from django.utils.translation import ugettext_lazy as _
-
+from django.http import HttpResponse, HttpResponseRedirect
 # Create your views here.
 from django.template.response import TemplateResponse
+from django.utils.translation import ugettext_lazy as _
 
 from application.forms import CaptchaLoginForm
-from django.contrib.auth import login
-
 from application.models import MemberApplication
 
 
@@ -49,7 +47,7 @@ def index(request):
 
 
 def impressum(request):
-    return TemplateResponse(request, "impressum.html",{})
+    return TemplateResponse(request, "impressum.html", {})
 
 
 def verify(request, verification_code):
@@ -62,8 +60,8 @@ def verify(request, verification_code):
             message = _('Mitgliedsantrag wurde bereits bestätigt.')
             return HttpResponse(message)
 
-        else :
-            # Verifiy application
+        else:
+            # Verify application
             application.is_verified = True
             application.save()
 
@@ -73,12 +71,6 @@ def verify(request, verification_code):
     except ObjectDoesNotExist as e:
         message = _('Fehler: Üngultiger Code')
         return HttpResponse(message, status=400)
-
-    return TemplateResponse(request, "impressum.html", {})
-
-
-
-from django.contrib.auth import logout
 
 
 def logout_view(request):

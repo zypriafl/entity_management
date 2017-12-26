@@ -2,16 +2,16 @@
 from __future__ import unicode_literals
 
 import csv
+
 from django.contrib import admin
+from django.contrib.admin.models import DELETION, LogEntry
+from django.core.urlresolvers import reverse
 from django.http import HttpResponse
+from django.utils.html import escape
 from django.utils.translation import ugettext_lazy as _
 
 # Register your models here.
 from member.models import Member
-
-from django.contrib.admin.models import LogEntry, DELETION
-from django.utils.html import escape
-from django.core.urlresolvers import reverse
 
 
 class LogEntryAdmin(admin.ModelAdmin):

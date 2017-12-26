@@ -4,7 +4,7 @@ from __future__ import unicode_literals
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from localflavor.generic.countries.sepa import IBAN_SEPA_COUNTRIES
-from localflavor.generic.models import IBANField, BICField
+from localflavor.generic.models import BICField, IBANField
 
 from application.models import MemberApplication
 
