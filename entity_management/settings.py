@@ -137,3 +137,7 @@ RECAPTCHA_PRIVATE_KEY = '6LeIxAcTAAAAAGG-vFI1TnRWxMZNFuojJ4WifJWe'
 NOCAPTCHA = True
 
 LOGOUT_REDIRECT_URL = "/"
+
+# Email Settings
+DEFAULT_FROM_EMAIL = 'noreply@studylife-muenchen.de'
+CURRENT_DOMAIN_URL = 'https://studylife-muenchen.de'

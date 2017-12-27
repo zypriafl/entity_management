@@ -2,15 +2,20 @@
 from __future__ import unicode_literals
 
 from django.apps import apps
+from django.conf import settings
 from django.core.exceptions import ValidationError
 from django.core.mail import mail_admins, mail_managers, send_mail
 from django.db import models
+from django.urls import reverse
 from django.utils.crypto import get_random_string
 from django.utils.html import format_html
 from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext_lazy as _
 from localflavor.generic.countries.sepa import IBAN_SEPA_COUNTRIES
 from localflavor.generic.models import BICField, IBANField
+
+from email_template.helpers import send_template_mail
+from email_template.models import EmailTemplate
 
 
 def validate_true(value):
@@ -86,42 +91,32 @@ class MemberApplication(models.Model):
 
         # Load board members that needs to notified
         Member = apps.get_model('member', 'Member')
-        board_members = (Member.objects.filter(position_type__isnull=False))
+        board_members = list(Member.objects.filter(position_type__isnull=False).values_list('email', flat=True))
 
-        # Send Email to new Member
         if not self.pk:
-            send_mail(_('Bestätige deinen Mitgliedsantrag für Studylife München e.V.'),
-                      _('Dein Mitgliedsantrag ist eingegangen. '
-                        'Bitte bestätige deinen Mitgliedsantrag mit '
-                        'einem Klick auf folgenden Link https://studylife-muenchen.de/verify/{}/'.format(self.verification_code)),
-                      'noreply@studylife-muenchen.de',
-                      [self.email])
+            # Send Email to new Member
+            verify_path = reverse('verify', kwargs={'verification_code': self.verification_code})
+            verify_url = '{}{}'.format(settings.CURRENT_DOMAIN_URL, verify_path)
+            send_template_mail(EmailTemplate.NOTIFY_MEMBER_TO_VERIFY_APPLICATION,
+                               [self.email],
+                               {'member_application': self,
+                                'verify_url': verify_url})
+
+            # Notify board members about new applications
+            Member = apps.get_model('member', 'Member')
+
+            send_template_mail(EmailTemplate.NOTIFY_BOARD_NEW_APPLICATION,
+                               board_members,
+                               {"member_application": self})
 
         # Notify board members about verified applications
         if self.pk:
             old_self = MemberApplication.objects.get(email=self.email)
             if not old_self.is_verified and self.is_verified:
-                for board_member in board_members:
-                    send_mail(_('Bestätigung eines Mitgliedsantrag für Studylife München e.V.'),
-                              _('Der Mitgliedsantrag von {} {} würde bestätigt. '
-                                'Um den Antrag zu bearbeiten gehe auf: https://studylife-muenchen.de'.format(self.first_name,
-                                                                                                        self.last_name)),
-                              'noreply@studylife-muenchen.de',
-                              [board_member.email])
+                send_template_mail(EmailTemplate.NOTIFY_BOARD_VERIFIED_APPLICATION,
+                                   board_members,
+                                   {"member_application": self})
 
-        # Notify board members about new applications
-        if not self.pk:
-            Member = apps.get_model('member', 'Member')
-            board_member = (Member.objects.filter(position_type__isnull=False))
-
-            for member in board_member:
-                send_mail(_('Neuer Mitgliedsantrag für Studylife München e.V.'),
-                          _('Neuer Mitgliedsantrag von {} {} eingegangen. '
-                            'Um den Antrag zu bearbeiten gehe auf: https://studylife-muenchen.de'.format(self.first_name, self.last_name)),
-                          'noreply@studylife-muenchen.de',
-                          [member.email])
-
-        # Ensure group name is not longer than 80 characters
         return super(MemberApplication, self).save(*args, **kwargs)
 
     def __str__(self):

@@ -9,6 +9,8 @@ from django.utils.translation import ugettext_lazy as _
 
 # Register your models here.
 from application.models import MemberApplication
+from email_template.helpers import send_template_mail
+from email_template.models import EmailTemplate
 from member.models import Member
 
 
@@ -50,14 +52,7 @@ def accept(modeladmin, request, queryset):
     application.save()
 
     # Send E-Mail to new Member
-    send_mail(_('Deine Mitgliedschaft im Studylife München e.V.'),
-              _('Hallo {first_name},\n'
-                'danke für deinen Mitgliedsantrag. Wir haben dich in den Verein aufgenommen.\n'
-                '\n'
-                'Beste Grüße\n'
-                'dein Vorstand des Studylife München e.V.\n'.format(first_name=member.first_name)),
-              'noreply@studylife-muenchen.de',
-              [member.email])
+    send_template_mail(EmailTemplate.NOTIFY_MEMBER_ABOUT_MEMBERSHIP, [member.email], {"member": member})
 
 
 def make_done(modeladmin, request, queryset):

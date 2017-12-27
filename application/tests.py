@@ -2,6 +2,7 @@
 from __future__ import unicode_literals
 
 from django.contrib.auth.models import User
+from django.core import mail
 from django.core.urlresolvers import reverse
 from django.test import Client, TestCase, client
 # Create your tests here.
@@ -11,12 +12,13 @@ from application.models import MemberApplication
 from application.templatetags.description import (BOTTOM_DESCRIPTION,
                                                   TOP_DESCRIPTION)
 from member.models import Member
-from django.core import mail
+
 
 class MemberTests(TestCase):
     """
     As a  admin I want to create a Member from a MemberApplicationForm
     """
+    fixtures = ['fixtures/email_template.json']
 
     def setUp(self):
         self.client = Client()
@@ -80,6 +82,7 @@ class MemberTests(TestCase):
         """
         # Empty the test outbox
         mail.outbox = []
+        self.assertEqual(len(mail.outbox), 0)
         self.assertTrue(self.application.is_new)
 
         change_url = reverse('admin:application_memberapplication_changelist')
@@ -104,13 +107,6 @@ class MemberTests(TestCase):
         # Test that one message has been sent to the member.
         self.assertEqual(len(mail.outbox), 1)
         self.assertEqual(mail.outbox[0].subject, 'Deine Mitgliedschaft im Studylife München e.V.')
-
-        body_string =('Hallo Florian,\n'
-                'danke für deinen Mitgliedsantrag. Wir haben dich in den Verein aufgenommen.\n'
-                '\n'
-                'Beste Grüße\n'
-                'dein Vorstand des Studylife München e.V.\n')
-        self.assertEqual(mail.outbox[0].body, body_string)
 
     def test_verify_email_accept(self):
         # Empty the test outbox
