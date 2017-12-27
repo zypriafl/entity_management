@@ -5,7 +5,7 @@ import csv
 
 from django.contrib import admin
 from django.contrib.admin.models import DELETION, LogEntry
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.http import HttpResponse
 from django.utils.html import escape
 from django.utils.translation import ugettext_lazy as _

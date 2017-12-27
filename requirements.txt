@@ -1,5 +1,4 @@
-Django<2
-django-flat-responsive
+Django
 django-localflavor
 django-recaptcha
 pytz
