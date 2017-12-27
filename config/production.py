@@ -1,6 +1,6 @@
 import os
 
-from entity_management.settings import *
+from entity_management.settings import *  # noqa
 
 # Server Settings
 DEBUG = False
@@ -15,9 +15,9 @@ RECAPTCHA_PRIVATE_KEY = os.environ['RECAPTCHA_PRIVATE_KEY']
 
 # Email Settings
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = os.environ['EMAIL_HOST']  #'smtp.mailgun.org'
-EMAIL_HOST_USER = os.environ['EMAIL_HOST_USER'] #'noreply@mg.studylife-muenchen.de'
-EMAIL_HOST_PASSWORD = os.environ['EMAIL_HOST_PASSWORD'] #'7QwslqAOjvoQmYxO7S'
+EMAIL_HOST = os.environ['EMAIL_HOST']  # 'smtp.mailgun.org'
+EMAIL_HOST_USER = os.environ['EMAIL_HOST_USER']  # 'noreply@mg.studylife-muenchen.de'
+EMAIL_HOST_PASSWORD = os.environ['EMAIL_HOST_PASSWORD']  # '7QwslqAOjvoQmYxO7S'
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587
 ADMINS = [admin for admin in os.environ['ADMINS'].split(', ')]

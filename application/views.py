@@ -24,7 +24,8 @@ def index(request):
             user = User.objects.get(username='visitor')
             user.backend = 'django.contrib.auth.backends.ModelBackend'
             login(request, user)
-            return HttpResponseRedirect('/admin/application/memberapplication/add/')
+            return HttpResponseRedirect(
+                '/admin/application/memberapplication/add/')
 
         else:
             # Captcha not solved.
@@ -38,12 +39,12 @@ def index(request):
 
     # if a GET (or any other method) we'll create a blank form
     form = CaptchaLoginForm()
-    return TemplateResponse(request, 
-        "application/index.html", 
-        {'form': form,
-        'site_header': _('Studylife München e.V.'),
-        'site_title': _('Studylife München e.V.'),
-        'title': _('Verwaltung')})
+    return TemplateResponse(request,
+                            "application/index.html",
+                            {'form': form,
+                             'site_header': _('Studylife München e.V.'),
+                                'site_title': _('Studylife München e.V.'),
+                                'title': _('Verwaltung')})
 
 
 def impressum(request):
@@ -53,7 +54,8 @@ def impressum(request):
 def verify(request, verification_code):
     # Try to get member application associated to this hash
     try:
-        application = MemberApplication.objects.get(verification_code=verification_code)
+        application = MemberApplication.objects.get(
+            verification_code=verification_code)
 
         if application.is_verified:
             # Return already verified
@@ -65,7 +67,8 @@ def verify(request, verification_code):
             application.is_verified = True
             application.save()
 
-            message = _('Dein Mitgliedsantrag wurde bestätigt. Wir werden diesen nun prüfen und melden uns bald bei dir.')
+            message = _(
+                'Dein Mitgliedsantrag wurde bestätigt. Wir werden diesen nun prüfen und melden uns bald bei dir.')
             return HttpResponse(message)
 
     except ObjectDoesNotExist as e:

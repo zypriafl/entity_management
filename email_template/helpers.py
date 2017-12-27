@@ -1,9 +1,8 @@
 from django.conf import settings
-from django.contrib.auth.models import AnonymousUser, Group, User
+from django.contrib.auth.models import User
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.mail import send_mail
 from django.template import Context, Template
-from django.utils.translation import activate, get_language
 
 from .models import EmailTemplate
 

@@ -4,7 +4,7 @@ from __future__ import unicode_literals
 from django.contrib.auth.models import User
 from django.core import mail
 from django.core.urlresolvers import reverse
-from django.test import Client, TestCase, client
+from django.test import Client, TestCase
 # Create your tests here.
 from django.utils import timezone
 
@@ -22,7 +22,8 @@ class MemberTests(TestCase):
 
     def setUp(self):
         self.client = Client()
-        my_admin = User.objects.create_superuser('my_admin', 'my_admin@example.org', 'password')
+        my_admin = User.objects.create_superuser(
+            'my_admin', 'my_admin@example.org', 'password')
         self.client.login(username=my_admin.username, password='password')
 
         # Create Board Member
@@ -53,7 +54,7 @@ class MemberTests(TestCase):
         application.phone_number = '0123456789'
         application.street_name = 'A Street'
         application.street_number = '123'
-        application.postal_code ='124456'
+        application.postal_code = '124456'
         application.city = 'A City'
         application.country = 'A Country'
         application.iban = self.example_iban
@@ -68,10 +69,15 @@ class MemberTests(TestCase):
         Test that an application was created and an email was send out
         :return:
         """
-        # Test that one message has been sent to the member and one to the board member.
+        # Test that one message has been sent to the member and one to the
+        # board member.
         self.assertEqual(len(mail.outbox), 2)
-        self.assertEqual(mail.outbox[0].subject, 'Bestätige deinen Mitgliedsantrag für Studylife München e.V.')
-        self.assertEqual(mail.outbox[1].subject, 'Neuer Mitgliedsantrag für Studylife München e.V.')
+        self.assertEqual(
+            mail.outbox[0].subject,
+            'Bestätige deinen Mitgliedsantrag für Studylife München e.V.')
+        self.assertEqual(
+            mail.outbox[1].subject,
+            'Neuer Mitgliedsantrag für Studylife München e.V.')
 
         self.assertEqual(len(MemberApplication.objects.all()), 1)
 
@@ -100,34 +106,45 @@ class MemberTests(TestCase):
         self.assertEqual(member.iban, self.example_iban)
         self.assertEqual(member.bic, self.example_bic)
 
-        application = MemberApplication.objects.get(email='florian.zyprian@example.org')
+        application = MemberApplication.objects.get(
+            email='florian.zyprian@example.org')
         self.assertFalse(application.is_new)
         self.assertEqual(application, member.application_form)
 
         # Test that one message has been sent to the member.
         self.assertEqual(len(mail.outbox), 1)
-        self.assertEqual(mail.outbox[0].subject, 'Deine Mitgliedschaft im Studylife München e.V.')
+        self.assertEqual(
+            mail.outbox[0].subject,
+            'Deine Mitgliedschaft im Studylife München e.V.')
 
     def test_verify_email_accept(self):
         # Empty the test outbox
         mail.outbox = []
-        verification_url = reverse('verify', kwargs={'verification_code': self.application.verification_code})
+        verification_url = reverse(
+            'verify', kwargs={
+                'verification_code': self.application.verification_code})
         self.assertFalse(self.application.is_verified)
         response = self.client.get(verification_url)
 
-        self.assertEqual(response.content.decode('utf-8'),
-                         ('Dein Mitgliedsantrag wurde bestätigt. '
-                          'Wir werden diesen nun prüfen und melden uns bald bei dir.'))
+        self.assertEqual(
+            response.content.decode('utf-8'),
+            ('Dein Mitgliedsantrag wurde bestätigt. '
+             'Wir werden diesen nun prüfen und melden uns bald bei dir.'))
 
         application = MemberApplication.objects.get(id=self.application.id)
         self.assertTrue(application.is_verified)
 
-        # Test that one message has been sent to the member and one to the board member.
+        # Test that one message has been sent to the member and one to the
+        # board member.
         self.assertEqual(len(mail.outbox), 1)
-        self.assertEqual(mail.outbox[0].subject, 'Bestätigung eines Mitgliedsantrag für Studylife München e.V.')
+        self.assertEqual(
+            mail.outbox[0].subject,
+            'Bestätigung eines Mitgliedsantrag für Studylife München e.V.')
 
     def test_verify_email_accepted_already(self):
-        verification_url = reverse('verify', kwargs={'verification_code': self.application.verification_code})
+        verification_url = reverse(
+            'verify', kwargs={
+                'verification_code': self.application.verification_code})
         self.application.is_verified = True
         self.application.save()
 
@@ -135,15 +152,21 @@ class MemberTests(TestCase):
         mail.outbox = []
 
         response = self.client.get(verification_url)
-        self.assertEqual(response.content.decode('utf-8'), ('Mitgliedsantrag wurde bereits bestätigt.'))
+        self.assertEqual(
+            response.content.decode('utf-8'),
+            ('Mitgliedsantrag wurde bereits bestätigt.'))
 
         # Test that no message has been sent.
         self.assertEqual(len(mail.outbox), 0)
 
     def test_verify_email_invalid(self):
-        invalid_verification_url = reverse('verify', kwargs={'verification_code': 'hsufdkshfkjshkj'})
+        invalid_verification_url = reverse(
+            'verify', kwargs={
+                'verification_code': 'hsufdkshfkjshkj'})
         response = self.client.get(invalid_verification_url)
-        self.assertEqual(response.content.decode('utf-8'), ('Fehler: Üngultiger Code'))
+        self.assertEqual(
+            response.content.decode('utf-8'),
+            ('Fehler: Üngultiger Code'))
 
     def test_application_form(self):
         form_url = reverse('admin:application_memberapplication_add')
