@@ -2,8 +2,7 @@
 from __future__ import unicode_literals
 
 from django.contrib import admin
-from django.core.mail import send_mail
-from django.http import HttpResponse, JsonResponse
+from django.http import HttpResponse
 from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
 
@@ -17,7 +16,8 @@ from member.models import Member
 def accept(modeladmin, request, queryset):
     if len(queryset) > 1:
         status_code = 400
-        message =_('Fehler: Mitgliedsanträge müssen einzeln akzeptiert werden.')
+        message = _(
+            'Fehler: Mitgliedsanträge müssen einzeln akzeptiert werden.')
         return HttpResponse(message, status=status_code)
 
     application = queryset[0]
@@ -52,7 +52,10 @@ def accept(modeladmin, request, queryset):
     application.save()
 
     # Send E-Mail to new Member
-    send_template_mail(EmailTemplate.NOTIFY_MEMBER_ABOUT_MEMBERSHIP, [member.email], {"member": member})
+    send_template_mail(
+        EmailTemplate.NOTIFY_MEMBER_ABOUT_MEMBERSHIP, [
+            member.email], {
+            "member": member})
 
 
 def make_done(modeladmin, request, queryset):
@@ -64,13 +67,21 @@ def make_new(modeladmin, request, queryset):
 
 
 class MemberApplicationAdmin(admin.ModelAdmin):
-    list_display = ('__str__', 'first_name', 'last_name', 'email', 'membership_type', 'is_new', 'is_verified')
+    list_display = (
+        '__str__',
+        'first_name',
+        'last_name',
+        'email',
+        'membership_type',
+        'is_new',
+        'is_verified')
     list_filter = ('is_new',)
     readonly_fields = ('created_at', 'updated_at')
     actions = [make_done, make_new, accept]
 
 
 admin.site.register(MemberApplication, MemberApplicationAdmin)
-accept.short_description = _("Ausgewählter Mitgliedsantrag akzeptieren und neues Mitglied erstellen")
+accept.short_description = _(
+    "Ausgewählter Mitgliedsantrag akzeptieren und neues Mitglied erstellen")
 make_done.short_description = _("Ausgewählte Mitgliedsanträge ablehnen")
 make_new.short_description = "Ausgewählte Mitgliedsanträge als neu markieren"

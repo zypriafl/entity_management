@@ -26,30 +26,73 @@ class Member(models.Model):
     )
 
     # Fields that can be populated via the ApplicationForm
-    first_name = models.CharField(max_length=100, null=False, blank=False, verbose_name=_('Vorname'))
-    last_name = models.CharField(max_length=100, null=False, blank=False, verbose_name=_('Nachname'))
+    first_name = models.CharField(
+        max_length=100,
+        null=False,
+        blank=False,
+        verbose_name=_('Vorname'))
+    last_name = models.CharField(
+        max_length=100,
+        null=False,
+        blank=False,
+        verbose_name=_('Nachname'))
     gender = models.CharField(max_length=50,
                               null=True,
                               blank=False,
                               choices=MemberApplication.GENDERS,
                               verbose_name='Geschlecht')
-    email = models.EmailField(null=False, blank=False, verbose_name=_('E-Mail Adresse'))
-    birthday = models.DateField(null=False, blank=False, verbose_name=_('Geburtsdatum'))
-    phone_number = models.CharField(max_length=50, null=False, blank=False, verbose_name=_('Telefonnummer'))
-    street_name = models.CharField(max_length=100, null=False, blank=False, verbose_name=_('Straße'))
-    street_number = models.CharField(max_length=25, null=False, blank=False, verbose_name=_('Hausnummer'))
-    postal_code = models.CharField(max_length=25, null=False, blank=False, verbose_name=_('Postleitzahl'))
-    city = models.CharField(max_length=100, null=False, blank=False, verbose_name=_('Stadt'))
-    country = models.CharField(max_length=100, null=False, blank=False, verbose_name=_('Land'))
+    email = models.EmailField(
+        null=False,
+        blank=False,
+        verbose_name=_('E-Mail Adresse'))
+    birthday = models.DateField(
+        null=False,
+        blank=False,
+        verbose_name=_('Geburtsdatum'))
+    phone_number = models.CharField(
+        max_length=50,
+        null=False,
+        blank=False,
+        verbose_name=_('Telefonnummer'))
+    street_name = models.CharField(
+        max_length=100,
+        null=False,
+        blank=False,
+        verbose_name=_('Straße'))
+    street_number = models.CharField(
+        max_length=25,
+        null=False,
+        blank=False,
+        verbose_name=_('Hausnummer'))
+    postal_code = models.CharField(
+        max_length=25,
+        null=False,
+        blank=False,
+        verbose_name=_('Postleitzahl'))
+    city = models.CharField(
+        max_length=100,
+        null=False,
+        blank=False,
+        verbose_name=_('Stadt'))
+    country = models.CharField(
+        max_length=100,
+        null=False,
+        blank=False,
+        verbose_name=_('Land'))
 
-    iban = IBANField(include_countries=IBAN_SEPA_COUNTRIES, null=True, blank=True, verbose_name='IBAN')
+    iban = IBANField(
+        include_countries=IBAN_SEPA_COUNTRIES,
+        null=True,
+        blank=True,
+        verbose_name='IBAN')
     bic = BICField(verbose_name='BIC', null=True, blank=True)
 
-    membership_type = models.CharField(max_length=50,
-                                       null=False,
-                                       blank=False,
-                                       choices=MemberApplication.MEMBER_TYPES,
-                                       verbose_name = _('Art der Mitgliedschaft'))
+    membership_type = models.CharField(
+        max_length=50,
+        null=False,
+        blank=False,
+        choices=MemberApplication.MEMBER_TYPES,
+        verbose_name=_('Art der Mitgliedschaft'))
 
     # Additional Fields for internal management
     position_type = models.CharField(max_length=50,
@@ -64,10 +107,16 @@ class Member(models.Model):
                                          editable=False,
                                          verbose_name=_('Mitgliedsantrag'))
 
-    member_since = models.DateField(null=False, blank=False, verbose_name=_('Mitlied seit'))
+    member_since = models.DateField(
+        null=False,
+        blank=False,
+        verbose_name=_('Mitlied seit'))
 
-    created_at = models.DateTimeField(auto_now_add=True, verbose_name=_('erstellt am'))
-    updated_at = models.DateTimeField(auto_now=True, verbose_name=_('geändert am'))
+    created_at = models.DateTimeField(
+        auto_now_add=True,
+        verbose_name=_('erstellt am'))
+    updated_at = models.DateTimeField(
+        auto_now=True, verbose_name=_('geändert am'))
 
     class Meta:
         verbose_name = _('Mitglied')

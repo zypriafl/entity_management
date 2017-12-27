@@ -1,6 +1,8 @@
-Django
+Django<2
 django-flat-responsive
 django-localflavor
 django-recaptcha
 pytz
+coverage
 fabric3
+flake8
