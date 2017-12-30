@@ -1,10 +1,8 @@
 # -*- coding: utf-8 -*-
-from __future__ import unicode_literals
-
 from django.contrib.auth.models import User
 from django.core import mail
-from django.urls import reverse
 from django.test import Client, TestCase
+from django.urls import reverse
 # Create your tests here.
 from django.utils import timezone
 
