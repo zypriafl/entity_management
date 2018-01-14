@@ -87,6 +87,10 @@ class Member(models.Model):
         verbose_name='IBAN')
     bic = BICField(verbose_name='BIC', null=True, blank=True)
 
+    paid_2018 = models.BooleanField(
+        default=False,
+        verbose_name='bezahlt 2018?')
+
     membership_type = models.CharField(
         max_length=50,
         null=False,
