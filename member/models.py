@@ -108,7 +108,7 @@ class Member(models.Model):
         max_length=50,
         null=False,
         blank=False,
-        choices=MemberApplication.MEMBER_TYPES,
+        choices=MEMBER_TYPES,
         verbose_name=_('Art der Mitgliedschaft'))
 
     # Additional Fields for internal management
