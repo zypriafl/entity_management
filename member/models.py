@@ -25,6 +25,19 @@ class Member(models.Model):
         (BOARD_3, _('Finanzvorstand'))
     )
 
+    # Options for membership types
+    ACTIVE = 'active'
+    ACTIVE_CHEERLEADING = 'active_cheerleading'
+    SUPPORT = 'support'
+    INACTIVE = 'inactive'
+
+    MEMBER_TYPES = (
+        (ACTIVE, _('Aktiv')),
+        (ACTIVE_CHEERLEADING, _('Aktiv - Cheerleading')),
+        (SUPPORT, _('Fördermitglied')),
+        (INACTIVE, _('Ausgetreten')),
+    )
+
     # Fields that can be populated via the ApplicationForm
     first_name = models.CharField(
         max_length=100,
