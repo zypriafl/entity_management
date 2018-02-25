@@ -60,6 +60,7 @@ jobs:
             ./cc-test-reporter before-build
             . venv/bin/activate
             coverage run --source='.' manage.py test
+            coverage xml
             ./cc-test-reporter after-build --coverage-input-type coverage.py --exit-code $?
 
       - store_artifacts:
