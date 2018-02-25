@@ -18,14 +18,9 @@ class MemberTests(TestCase):
     """
     fixtures = ['fixtures/email_template.json']
 
-    def setUp(self):
-        self.client = Client()
-        my_admin = User.objects.create_superuser(
-            'my_admin', 'my_admin@example.org', 'password')
-        self.client.login(username=my_admin.username, password='password')
-
+    def create_new_board_member(self):
         # Create Board Member
-        Member.objects.create(
+        member = Member.objects.create(
             first_name='Max',
             last_name='Mustermann',
             gender=MemberApplication.MALE,
@@ -35,6 +30,9 @@ class MemberTests(TestCase):
             position_type='Vorstand'
         )
 
+        self.member = member
+
+    def create_new_application(self):
         # Create new Application
         self.first_name = 'Florian'
         self.last_name = 'Zyprian'
@@ -61,6 +59,15 @@ class MemberTests(TestCase):
         application.save()
 
         self.application = application
+
+    def setUp(self):
+        self.client = Client()
+        my_admin = User.objects.create_superuser(
+            'my_admin', 'my_admin@example.org', 'password')
+        self.client.login(username=my_admin.username, password='password')
+
+        self.create_new_board_member()
+        self.create_new_application()
 
     def test_application_creation(self):
         """

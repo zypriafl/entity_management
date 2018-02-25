@@ -11,19 +11,7 @@ from email_template.models import EmailTemplate
 from member.models import Member
 
 
-def accept(modeladmin, request, queryset):
-    if len(queryset) > 1:
-        status_code = 400
-        message = _(
-            'Fehler: Mitgliedsanträge müssen einzeln akzeptiert werden.')
-        return HttpResponse(message, status=status_code)
-
-    application = queryset[0]
-    if not application.is_new:
-        status_code = 400
-        message = _('Fehler: Mitgliedsantrag wurde bereits bearbeitet.')
-        return HttpResponse(message, status=status_code)
-
+def create_new_member_from_application(application):
     # Create new Member entry
     member = Member()
     member.first_name = application.first_name
@@ -54,6 +42,22 @@ def accept(modeladmin, request, queryset):
         EmailTemplate.NOTIFY_MEMBER_ABOUT_MEMBERSHIP, [
             member.email], {
             "member": member})
+
+
+def accept(modeladmin, request, queryset):
+    if len(queryset) > 1:
+        status_code = 400
+        message = _(
+            'Fehler: Mitgliedsanträge müssen einzeln akzeptiert werden.')
+        return HttpResponse(message, status=status_code)
+
+    application = queryset[0]
+    if not application.is_new:
+        status_code = 400
+        message = _('Fehler: Mitgliedsantrag wurde bereits bearbeitet.')
+        return HttpResponse(message, status=status_code)
+
+    create_new_member_from_application(application)
 
 
 def make_done(modeladmin, request, queryset):

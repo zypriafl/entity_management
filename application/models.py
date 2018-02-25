@@ -1,6 +1,4 @@
 # -*- coding: utf-8 -*-
-
-
 from django.apps import apps
 from django.conf import settings
 from django.core.exceptions import ValidationError
@@ -13,6 +11,16 @@ from localflavor.generic.models import BICField, IBANField
 
 from email_template.helpers import send_template_mail
 from email_template.models import EmailTemplate
+
+
+def _get_board_members_to_be_notifed():
+    Member = apps.get_model('member', 'Member')
+    board_members = list(
+        Member.objects.filter(
+            position_type__isnull=False).values_list(
+            'email', flat=True))
+
+    return board_members
 
 
 def validate_true(value):
@@ -142,17 +150,14 @@ class MemberApplication(models.Model):
         verbose_name='Bestätigt via Email ?')
 
     def save(self, *args, **kwargs):
-        # Generate verify code if not exist yet
+        # Generate verify code if not existing yet
         if not self.verification_code:
             self.verification_code = get_random_string(64)
 
         # Load board members that needs to notified
-        Member = apps.get_model('member', 'Member')
-        board_members = list(
-            Member.objects.filter(
-                position_type__isnull=False).values_list(
-                'email', flat=True))
+        board_members = _get_board_members_to_be_notifed()
 
+        # If created
         if not self.pk:
             # Send Email to new Member
             verify_path = reverse(
@@ -166,14 +171,13 @@ class MemberApplication(models.Model):
                                 'verify_url': verify_url})
 
             # Notify board members about new applications
-            Member = apps.get_model('member', 'Member')
-
             send_template_mail(EmailTemplate.NOTIFY_BOARD_NEW_APPLICATION,
                                board_members,
                                {"member_application": self})
 
-        # Notify board members about verified applications
+        # If updated
         if self.pk:
+            # Notify board members about verified applications
             old_self = MemberApplication.objects.get(email=self.email)
             if not old_self.is_verified and self.is_verified:
                 send_template_mail(
