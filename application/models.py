@@ -155,6 +155,14 @@ class MemberApplication(models.Model):
             self.verification_code = get_random_string(64)
 
         # Load board members that needs to notified
+        self._send_notification_emails()
+
+        return super(MemberApplication, self).save(*args, **kwargs)
+
+    def __str__(self):
+        return 'Mitgliedsantrag vom {:%d.%m.%Y}'.format(self.created_at)
+
+    def _send_notification_emails(self):
         board_members = _get_board_members_to_be_notifed()
 
         # If created
@@ -183,11 +191,6 @@ class MemberApplication(models.Model):
                 send_template_mail(
                     EmailTemplate.NOTIFY_BOARD_VERIFIED_APPLICATION, board_members, {
                         "member_application": self})
-
-        return super(MemberApplication, self).save(*args, **kwargs)
-
-    def __str__(self):
-        return 'Mitgliedsantrag vom {:%d.%m.%Y}'.format(self.created_at)
 
     class Meta:
         verbose_name = _('Mitgliedsantrag')
