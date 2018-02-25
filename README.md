@@ -1,5 +1,4 @@
 [![Maintainability](https://api.codeclimate.com/v1/badges/ac5adf3a92f288a22858/maintainability)](https://codeclimate.com/github/zypriafl/entity_management/maintainability)
-
 [![Test Coverage](https://api.codeclimate.com/v1/badges/ac5adf3a92f288a22858/test_coverage)](https://codeclimate.com/github/zypriafl/entity_management/test_coverage)
 
 # entity_management
