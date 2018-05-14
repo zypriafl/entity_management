@@ -15,6 +15,7 @@ Including another URLconf
 """
 from django.conf.urls import url
 from django.contrib import admin
+from django.views.generic import TemplateView
 
 from application import views
 
@@ -23,6 +24,7 @@ urlpatterns = [
 
     url(r'^admin/', admin.site.urls),
     url(r'^impressum/', views.impressum),
+    url(r'^accounting/reimbursement/', TemplateView.as_view(template_name='accounting/reimbursement.html')),
     url(r'^verify/(?P<verification_code>[-\w]+)/$', views.verify, name='verify'),
     url(r'^', views.index),
 
