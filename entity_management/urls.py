@@ -24,7 +24,7 @@ urlpatterns = [
 
     url(r'^admin/', admin.site.urls),
     url(r'^impressum/', views.impressum),
-    url(r'^accounting/reimbursement/', TemplateView.as_view(template_name='accounting/reimbursement.html')),
+    url(r'^reimbursement/', TemplateView.as_view(template_name='accounting/reimbursement.html')),
     url(r'^verify/(?P<verification_code>[-\w]+)/$', views.verify, name='verify'),
     url(r'^', views.index),
 
