@@ -9,8 +9,8 @@ CSRF_TRUSTED_ORIGINS = ['www.studylife-muenchen.de', 'studylife-muenchen.de', 's
 SECRET_KEY = os.environ['SECRET_KEY']
 
 # HTTPS Settings
-SESSION_COOKIE_SECURE=True
-CSRF_COOKIE_SECURE=True
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
 
 # Google Captcha Settings
 RECAPTCHA_PUBLIC_KEY = '6LccWDoUAAAAAMv5iCOIzTPUYtf3i4ORKzWLXm7h'
