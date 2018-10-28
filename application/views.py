@@ -69,7 +69,7 @@ def verify(request, verification_code):
                 'Dein Mitgliedsantrag wurde bestätigt. Wir werden diesen nun prüfen und melden uns bald bei dir.')
             return HttpResponse(message)
 
-    except ObjectDoesNotExist as e:
+    except ObjectDoesNotExist:
         message = _('Fehler: Üngultiger Code')
         return HttpResponse(message, status=400)
 
