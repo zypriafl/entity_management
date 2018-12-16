@@ -118,6 +118,7 @@ class MemberAdmin(admin.ModelAdmin):
         'last_name',
         'email',
         'paid_2018',
+        'paid_2019',
         'member_since',
         'membership_type',
         'position_type')
