@@ -8,10 +8,13 @@ ALLOWED_HOSTS = ['studylife-muenchen.de', 'study.uber.space', 'localhost', '127.
 CSRF_TRUSTED_ORIGINS = ['www.studylife-muenchen.de', 'studylife-muenchen.de', 'study.uber.space']
 SECRET_KEY = os.environ['SECRET_KEY']
 
+# HTTPS Settings
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
+
 # Google Captcha Settings
 RECAPTCHA_PUBLIC_KEY = '6LccWDoUAAAAAMv5iCOIzTPUYtf3i4ORKzWLXm7h'
 RECAPTCHA_PRIVATE_KEY = os.environ['RECAPTCHA_PRIVATE_KEY']
-
 
 # Email Settings
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
