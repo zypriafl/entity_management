@@ -132,6 +132,7 @@ RECAPTCHA_PRIVATE_KEY = '6LeIxAcTAAAAAGG-vFI1TnRWxMZNFuojJ4WifJWe'
 
 # If you would like to use the new No Captcha reCaptcha add the setting NOCAPTCHA = True. For example:
 NOCAPTCHA = True
+SILENCED_SYSTEM_CHECKS = ['captcha.recaptcha_test_key_error']
 
 LOGOUT_REDIRECT_URL = "/"
 
