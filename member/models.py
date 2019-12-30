@@ -106,6 +106,10 @@ class Member(models.Model):
     paid_2019 = models.BooleanField(
         default=False,
         verbose_name='bezahlt 2019?')
+    paid_2020 = models.BooleanField(
+        default=False,
+        verbose_name='bezahlt 2020?')
+
 
     membership_type = models.CharField(
         max_length=50,
