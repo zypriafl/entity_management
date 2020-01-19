@@ -110,6 +110,8 @@ class MemberTests(TestCase):
         self.assertEqual(member.gender, self.gender)
         self.assertEqual(member.iban, self.example_iban)
         self.assertEqual(member.bic, self.example_bic)
+        self.assertEqual(member.paid_2018, None)
+        self.assertEqual(member.paid_2019, None)
 
         application = MemberApplication.objects.get(
             email='florian.zyprian@example.org')

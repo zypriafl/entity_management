@@ -30,6 +30,10 @@ def create_new_member_from_application(application):
     member.membership_type = application.membership_type
     member.member_since = timezone.now()
 
+    # Set paid_YYYY status to None for previous years.
+    for year in range(2018, timezone.now().year):
+        setattr(member, f'paid_{year}', None)
+
     member.application_form = application
     member.save()
 

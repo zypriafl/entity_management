@@ -100,13 +100,13 @@ class Member(models.Model):
         verbose_name='IBAN')
     bic = BICField(verbose_name='BIC', null=True, blank=True)
 
-    paid_2018 = models.BooleanField(
+    paid_2018 = models.NullBooleanField(
         default=False,
         verbose_name='bezahlt 2018?')
-    paid_2019 = models.BooleanField(
+    paid_2019 = models.NullBooleanField(
         default=False,
         verbose_name='bezahlt 2019?')
-    paid_2020 = models.BooleanField(
+    paid_2020 = models.NullBooleanField(
         default=False,
         verbose_name='bezahlt 2020?')
 
