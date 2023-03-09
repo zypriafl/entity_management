@@ -6,7 +6,7 @@ from django.contrib.admin.models import DELETION, LogEntry
 from django.http import HttpResponse
 from django.urls import reverse
 from django.utils.html import escape
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 
 # Register your models here.
 from member.models import Member
@@ -117,10 +117,9 @@ class MemberAdmin(admin.ModelAdmin):
         'first_name',
         'last_name',
         'email',
-        'paid_2019',
-        'paid_2020',
         'paid_2021',
         'paid_2022',
+        'paid_2023',
         'member_since',
         'membership_type',
         'position_type')

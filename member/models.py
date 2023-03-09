@@ -2,7 +2,7 @@
 
 
 from django.db import models
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 from localflavor.generic.countries.sepa import IBAN_SEPA_COUNTRIES
 from localflavor.generic.models import BICField, IBANField
 
@@ -120,6 +120,10 @@ class Member(models.Model):
         null=True,
         default=False,
         verbose_name='bezahlt 2022?')
+    paid_2023 = models.BooleanField(
+        null=True,
+        default=False,
+        verbose_name='bezahlt 2023?')
 
     membership_type = models.CharField(
         max_length=50,

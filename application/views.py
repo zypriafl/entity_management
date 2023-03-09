@@ -5,7 +5,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.http import HttpResponse, HttpResponseRedirect
 # Create your views here.
 from django.template.response import TemplateResponse
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 
 from application.forms import CaptchaLoginForm
 from application.models import MemberApplication
