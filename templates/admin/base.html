@@ -72,10 +72,10 @@
         {% block pretitle %}{% endblock %}
         {% block content_title %}{% if title %}<h1>{{ title }}</h1>{% endif %}{% endblock %}
 
-        {% ifequal title 'Mitgliedsantrag hinzufügen' %}
+        {% if title == 'Mitgliedsantrag hinzufügen' %}
         {% load description %}
             {% top_description %}
-        {% endifequal %}
+        {% endif %}
 
         {% block content %}
         {% block object-tools %}{% endblock %}
