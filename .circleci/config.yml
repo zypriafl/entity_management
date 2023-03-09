@@ -9,7 +9,6 @@ jobs:
       CC_TEST_REPORTER_ID: 46a5ed85992bc4ad14ebe9694c1f4f9beca2051b2afbaaa2a5ece130a5642000
     docker:
       # specify the version you desire here
-      # use `-browsers` prefix for selenium tests, e.g. `3.6.1-browsers`
       - image: circleci/python:3.8
 
       # Specify service dependencies here if necessary
