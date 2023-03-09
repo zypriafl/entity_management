@@ -9,7 +9,7 @@ jobs:
       CC_TEST_REPORTER_ID: 46a5ed85992bc4ad14ebe9694c1f4f9beca2051b2afbaaa2a5ece130a5642000
     docker:
       # specify the version you desire here
-      - image: circleci/python:3.8
+      - image: python:3.8
 
       # Specify service dependencies here if necessary
       # CircleCI maintains a library of pre-built images
