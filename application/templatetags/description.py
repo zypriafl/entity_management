@@ -12,8 +12,8 @@ TOP_DESCRIPTION = (
 BOTTOM_DESCRIPTION = (
     "Ich möchte zum nächstmöglichen Zeitpunkt Mitglied im Studylife München e.V. werden und "
     "akzeptiere die aktuelle Beitragsordnung.<br> Die Beitragshöhe für aktive Mitglieder beträgt "
-    "<b>1 EUR</b>  monatlich. Mitglieder die zusätzlich in der Abteilung „Cheerleading“ aktiv sind, "
-    "müssen insgesamt einen Betrag von <b>3 EUR</b> monatlich entrichten. Der Beitrag wird jährlich "
+    "<b>12 EUR</b> jährlich. Mitglieder die zusätzlich in der Abteilung „Cheerleading“ aktiv sind, "
+    "müssen insgesamt einen Betrag von <b>48 EUR</b> jährlich entrichten. Der Beitrag wird jährlich "
     "im Vorraus vom Mitglied gezahlt.<br><br> Um den Mitgliedsantrag abzuschicken klicke auf SICHERN."
     "<br><br>  Wir senden dir einen Link per E-Mail, um deine E-Mail Addresse zu bestätigen.")
 
