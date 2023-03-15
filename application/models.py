@@ -43,6 +43,7 @@ class MemberApplication(models.Model):
     # Options for gender
     FEMALE = 'female'
     MALE = 'male'
+    DIVERS = 'divers'
 
     MEMBER_TYPES = (
         (ACTIVE, _('Aktiv')),
@@ -53,6 +54,7 @@ class MemberApplication(models.Model):
     GENDERS = (
         (FEMALE, _('Frau')),
         (MALE, _('Mann')),
+        (DIVERS, _('Divers')),
     )
 
     first_name = models.CharField(
