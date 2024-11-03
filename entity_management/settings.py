@@ -140,4 +140,4 @@ LOGOUT_REDIRECT_URL = "/"
 DEFAULT_FROM_EMAIL = 'noreply@studylife-muenchen.de'
 CURRENT_DOMAIN_URL = 'https://studylife-muenchen.de'
 
-DEFAULT_AUTO_FIELD='django.db.models.AutoField'
+DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
