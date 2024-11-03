@@ -17,7 +17,7 @@ BOTTOM_DESCRIPTION = (
     "Studylife München e.V., Kreittmayrstr. 1, 80335 München als Zahlungsempfängerin die fälligen Zahlungen "
     "von meinem oben genannten Konto mittels Lastschrift einzuziehen. Zugleich weise ich mein Kreditinstitut "
     "(identifizierbar durch die angegebene BIC) an, die vom Studylife München e.V. auf mein Konto gezogenen "
-    "Lastschriften einzulösen.<br> Hinweis: Ich kann innerhalb von acht Wochen, beginnend mit dem Belastungsdatum, "
+    "Lastschriften einzulösen.<br><br> Hinweis: Ich kann innerhalb von acht Wochen, beginnend mit dem Belastungsdatum, "
     "die Erstattung des belasteten Betrages verlangen. Es gelten dabei die mit meinem Kreditinstitut vereinbarten "
     "Bedingungen. Die Gläubiger-ID des Studylife München e.V. ist DE65ZZZ00002669888. Die Mandatsreferenznummer "
     "wird separat mitgeteilt. Um den Mitgliedsantrag abzuschicken, klicke auf SICHERN.<br>"
