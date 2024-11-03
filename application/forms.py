@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from captcha.fields import ReCaptchaField
+from django_recaptcha.fields import ReCaptchaField
 from django import forms
 
 

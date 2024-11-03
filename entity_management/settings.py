@@ -42,7 +42,7 @@ INSTALLED_APPS = [
     'member',
     'email_template',
 
-    'captcha',
+    'django_recaptcha',
 ]
 
 MIDDLEWARE = [
@@ -132,10 +132,12 @@ RECAPTCHA_PRIVATE_KEY = '6LeIxAcTAAAAAGG-vFI1TnRWxMZNFuojJ4WifJWe'
 
 # If you would like to use the new No Captcha reCaptcha add the setting NOCAPTCHA = True. For example:
 NOCAPTCHA = True
-SILENCED_SYSTEM_CHECKS = ['captcha.recaptcha_test_key_error']
+SILENCED_SYSTEM_CHECKS = ['django_recaptcha.recaptcha_test_key_error']
 
 LOGOUT_REDIRECT_URL = "/"
 
 # Email Settings
 DEFAULT_FROM_EMAIL = 'noreply@studylife-muenchen.de'
 CURRENT_DOMAIN_URL = 'https://studylife-muenchen.de'
+
+DEFAULT_AUTO_FIELD='django.db.models.AutoField'
