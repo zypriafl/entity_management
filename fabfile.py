@@ -25,7 +25,7 @@ def deploy():
     """
     require('hosts', provided_by=[staging])
     with virtualenv():
-        run('python3 manage.py collectstatic --noinput --settings=config.deployment')
+        run('python3.10 manage.py collectstatic --noinput --settings=config.deployment')
 
 
 def restart_server():
@@ -42,13 +42,13 @@ def install_requirements():
     run('whoami')
     require('hosts', provided_by=[staging])
     with virtualenv():
-        run('pip3 install -r requirements.txt --user', pty=True)
+        run('python3.10 -m pip install -r requirements.txt --user', pty=True)
 
 
 def migrate():
     require('hosts', provided_by=[staging])
     with virtualenv():
-        run('python3 manage.py migrate --noinput --settings=config.deployment')
+        run('python3.10 manage.py migrate --noinput --settings=config.deployment')
 
 
 def git_pull():
