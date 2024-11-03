@@ -21,7 +21,8 @@ BOTTOM_DESCRIPTION = (
     "die Erstattung des belasteten Betrages verlangen. Es gelten dabei die mit meinem Kreditinstitut vereinbarten "
     "Bedingungen. Die Gläubiger-ID des Studylife München e.V. ist DE65ZZZ00002669888. Die Mandatsreferenznummer "
     "wird separat mitgeteilt. Um den Mitgliedsantrag abzuschicken, klicke auf SICHERN.<br>"
-    "Wir senden dir einen Link per E-Mail, um deine E-Mail Addresse zu bestätigen."
+    "Wir senden dir einen Link per E-Mail, um deine E-Mail Addresse zu bestätigen.")
+
 
 @register.simple_tag
 def top_description():
