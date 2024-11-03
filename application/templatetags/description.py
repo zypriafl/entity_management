@@ -11,12 +11,17 @@ TOP_DESCRIPTION = (
 
 BOTTOM_DESCRIPTION = (
     "Ich möchte zum nächstmöglichen Zeitpunkt Mitglied im Studylife München e.V. werden und "
-    "akzeptiere die aktuelle Beitragsordnung.<br> Die Beitragshöhe für aktive Mitglieder beträgt "
-    "<b>12 EUR</b> jährlich. Mitglieder die zusätzlich in der Abteilung „Cheerleading“ aktiv sind, "
-    "müssen insgesamt einen Betrag von <b>48 EUR</b> jährlich entrichten. Der Beitrag wird jährlich "
-    "im Vorraus vom Mitglied gezahlt.<br><br> Um den Mitgliedsantrag abzuschicken klicke auf SICHERN."
-    "<br><br>  Wir senden dir einen Link per E-Mail, um deine E-Mail Addresse zu bestätigen.")
-
+    "akzeptiere die aktuelle Beitragsordnung. <br> Die Beitragshöhe für aktive Mitglieder beträgt "
+    "<b>12</b> EUR jährlich. Mitglieder die zusätzlich in der Abteilung „Cheerleading“ aktiv sind, "
+    "müssen insgesamt einen Betrag von 48 EUR jährlich entrichten.<br><br> Hiermit ermächtige ich den "
+    "Studylife München e.V., Kreittmayrstr. 1, 80335 München als Zahlungsempfängerin die fälligen Zahlungen "
+    "von meinem oben genannten Konto mittels Lastschrift einzuziehen. Zugleich weise ich mein Kreditinstitut "
+    "(identifizierbar durch die angegebene BIC) an, die vom Studylife München e.V. auf mein Konto gezogenen "
+    "Lastschriften einzulösen.<br> Hinweis: Ich kann innerhalb von acht Wochen, beginnend mit dem Belastungsdatum, "
+    "die Erstattung des belasteten Betrages verlangen. Es gelten dabei die mit meinem Kreditinstitut vereinbarten "
+    "Bedingungen. Die Gläubiger-ID des Studylife München e.V. ist DE65ZZZ00002669888. Die Mandatsreferenznummer "
+    "wird separat mitgeteilt. Um den Mitgliedsantrag abzuschicken, klicke auf SICHERN.<br>"
+    "Wir senden dir einen Link per E-Mail, um deine E-Mail Addresse zu bestätigen."
 
 @register.simple_tag
 def top_description():
