@@ -5,7 +5,8 @@ from entity_management.settings import *  # noqa
 # Server Settings
 DEBUG = False
 ALLOWED_HOSTS = ['study.local.uberspace.de']
-CSRF_TRUSTED_ORIGINS = ['https://www.studylife-muenchen.de', 'https://studylife-muenchen.de', 'https://study.uber.space']
+CSRF_TRUSTED_ORIGINS = [
+    'https://www.studylife-muenchen.de', 'https://studylife-muenchen.de', 'https://study.uber.space']
 SECRET_KEY = os.environ['SECRET_KEY']
 
 # HTTPS Settings
