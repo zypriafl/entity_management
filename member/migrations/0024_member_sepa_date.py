@@ -4,7 +4,7 @@ from django.db import migrations, models
 
 
 def populate_sepa_date(apps, schema_editor):
-    Member = apps.get_model("yourappname", "Member")
+    Member = apps.get_model("member", "Member")
 
     for member in Member.objects.all().select_related("application_form"):
         if member.application_form and member.application_form.created_at:
