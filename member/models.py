@@ -124,6 +124,19 @@ class Member(models.Model):
         null=True,
         default=False,
         verbose_name='bezahlt 2023?')
+    paid_2024 = models.BooleanField(
+        null=True,
+        default=False,
+        verbose_name='bezahlt 2024?')
+    paid_2025 = models.BooleanField(
+        null=True,
+        default=False,
+        verbose_name='bezahlt 2025?')
+    paid_2026 = models.BooleanField(
+        null=True,
+        default=False,
+        verbose_name='bezahlt 2026?')
+
 
     membership_type = models.CharField(
         max_length=50,
@@ -149,6 +162,11 @@ class Member(models.Model):
         null=False,
         blank=False,
         verbose_name=_('Mitlied seit'))
+
+    member_exited = models.DateField(
+        null=True,
+        blank=True,
+        verbose_name=_('Ausgetreten zum'))
 
     created_at = models.DateTimeField(
         auto_now_add=True,

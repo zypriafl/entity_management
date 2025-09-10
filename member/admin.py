@@ -117,10 +117,14 @@ class MemberAdmin(admin.ModelAdmin):
         'first_name',
         'last_name',
         'email',
-        'paid_2021',
-        'paid_2022',
-        'paid_2023',
+        # 'paid_2021',
+        # 'paid_2022',
+        # 'paid_2023',
+        'paid_2024',
+        'paid_2025',
+        'paid_2026',
         'member_since',
+        'member_exited',
         'membership_type',
         'position_type')
     readonly_fields = ('application_form', 'created_at', 'updated_at')
