@@ -27,6 +27,7 @@ def create_new_member_from_application(application):
     member.country = application.country
     member.iban = application.iban
     member.bic = application.bic
+    member.sepa_date = application.created_at
     member.membership_type = application.membership_type
     member.member_since = timezone.now()
 

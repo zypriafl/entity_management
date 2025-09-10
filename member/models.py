@@ -99,6 +99,11 @@ class Member(models.Model):
         blank=True,
         verbose_name='IBAN')
     bic = BICField(verbose_name='BIC', null=True, blank=True)
+    sepa_date = models.DateField(
+        null=False,
+        blank=False,
+        verbose_name='Geburtsdatum'
+    )
 
     paid_2018 = models.BooleanField(
         null=True,
