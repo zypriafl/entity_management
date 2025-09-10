@@ -42,20 +42,12 @@ jobs:
             flake8 ./
 
       - run:
-          name: Setup Code Climate test-reporter
-          command: |
-            curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
-            chmod +x ./cc-test-reporter
-
-      - run:
           name: Run tests
-          command: |
-            ./cc-test-reporter before-build
+          command: |          
             . venv/bin/activate
             coverage run --source='.' manage.py test
             coverage report --omit='venv/*'
             coverage xml --omit='venv/*'
-            ./cc-test-reporter after-build --coverage-input-type coverage.py --exit-code $?
 
       - store_artifacts:
           path: test-reports
