@@ -137,7 +137,6 @@ class Member(models.Model):
         default=False,
         verbose_name='bezahlt 2026?')
 
-
     membership_type = models.CharField(
         max_length=50,
         null=False,
