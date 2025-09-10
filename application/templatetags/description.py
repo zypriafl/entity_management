@@ -13,7 +13,7 @@ BOTTOM_DESCRIPTION = (
     "Ich möchte zum nächstmöglichen Zeitpunkt Mitglied im Studylife München e.V. werden und "
     "akzeptiere die aktuelle Beitragsordnung. <br> Die Beitragshöhe für aktive Mitglieder beträgt "
     "<b>12</b> EUR jährlich. Mitglieder die zusätzlich in der Abteilung „Cheerleading“ aktiv sind, "
-    "müssen insgesamt einen Betrag von 48 EUR jährlich entrichten.<br><br> Hiermit ermächtige ich den "
+    "müssen insgesamt einen Betrag von 52 EUR jährlich entrichten.<br><br> Hiermit ermächtige ich den "
     "Studylife München e.V., Kreittmayrstr. 1, 80335 München als Zahlungsempfängerin die fälligen Zahlungen "
     "von meinem oben genannten Konto mittels Lastschrift einzuziehen. Zugleich weise ich mein Kreditinstitut "
     "(identifizierbar durch die angegebene BIC) an, die vom Studylife München e.V. auf mein Konto gezogenen "
