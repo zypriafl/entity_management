@@ -144,7 +144,10 @@ class MemberAdmin(admin.ModelAdmin):
             'fields': ('membership_type', 'position_type', 'member_since', 'member_exited', 'mahnungsstatus')
         }),
         ('Zahlungen', {
-            'fields': ('paid_2018', 'paid_2019', 'paid_2020', 'paid_2021', 'paid_2022', 'paid_2023', 'paid_2024', 'paid_2025', 'paid_2026')
+            'fields': (
+                'paid_2018', 'paid_2019', 'paid_2020', 'paid_2021', 'paid_2022',
+                'paid_2023', 'paid_2024', 'paid_2025', 'paid_2026'
+            )
         }),
         ('System', {
             'fields': ('application_form', 'created_at', 'updated_at')
