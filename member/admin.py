@@ -130,6 +130,26 @@ class MemberAdmin(admin.ModelAdmin):
         'membership_type',
         'position_type')
     readonly_fields = ('sepa_mandat', 'application_form', 'created_at', 'updated_at')
+    fieldsets = (
+        (None, {
+            'fields': ('first_name', 'last_name', 'gender', 'student_status', 'email', 'birthday', 'phone_number')
+        }),
+        ('Adresse', {
+            'fields': ('street_name', 'street_number', 'postal_code', 'city', 'country')
+        }),
+        ('SEPA Information', {
+            'fields': ('iban', 'bic', 'sepa_mandat', 'sepa_date', 'sepa_ok')
+        }),
+        ('Mitgliedschaft', {
+            'fields': ('membership_type', 'position_type', 'member_since', 'member_exited', 'mahnungsstatus')
+        }),
+        ('Zahlungen', {
+            'fields': ('paid_2018', 'paid_2019', 'paid_2020', 'paid_2021', 'paid_2022', 'paid_2023', 'paid_2024', 'paid_2025', 'paid_2026')
+        }),
+        ('System', {
+            'fields': ('application_form', 'created_at', 'updated_at')
+        }),
+    )
     list_filter = ('membership_type',)
     actions = [csv_export]
 
