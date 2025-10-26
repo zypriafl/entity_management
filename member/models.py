@@ -38,6 +38,19 @@ class Member(models.Model):
         (INACTIVE, _('Ausgetreten')),
     )
 
+    # Options for Mahnungsstatus
+    ERINNERUNG = 'erinnerung'
+    MAHNUNG_1 = 'mahnung_1'
+    MAHNUNG_2 = 'mahnung_2'
+    MAHNUNG_3 = 'mahnung_3'
+
+    MAHNUNGSSTATUS_CHOICES = (
+        (ERINNERUNG, _('Erinnerung')),
+        (MAHNUNG_1, _('1. Mahnung')),
+        (MAHNUNG_2, _('2. Mahnung')),
+        (MAHNUNG_3, _('3. Mahnung')),
+    )
+
     # Fields that can be populated via the ApplicationForm
     first_name = models.CharField(
         max_length=100,
@@ -54,6 +67,11 @@ class Member(models.Model):
                               blank=False,
                               choices=MemberApplication.GENDERS,
                               verbose_name='Geschlecht')
+    student_status = models.CharField(max_length=50,
+                                      null=True,
+                                      blank=True,
+                                      choices=MemberApplication.STUDENT_STATUS_CHOICES,
+                                      verbose_name='Student Status')
     email = models.EmailField(
         null=False,
         blank=False,
@@ -104,6 +122,18 @@ class Member(models.Model):
         blank=True,
         verbose_name='SEPA-Mandatsdatum'
     )
+
+    sepa_ok = models.BooleanField(
+        null=True,
+        default=True,
+        verbose_name='SEPA OK?')
+
+    mahnungsstatus = models.CharField(
+        max_length=50,
+        null=True,
+        blank=True,
+        choices=MAHNUNGSSTATUS_CHOICES,
+        verbose_name='Mahnungsstatus')
 
     paid_2018 = models.BooleanField(
         null=True,
@@ -182,6 +212,10 @@ class Member(models.Model):
         verbose_name = _('Mitglied')
         verbose_name_plural = _('Mitglieder')
         ordering = ['-last_name']
+
+    @property
+    def sepa_mandat(self):
+        return f'M{self.pk:04d}'
 
     def __str__(self):
         return '{} {}'.format(self.first_name, self.last_name)

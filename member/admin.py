@@ -113,10 +113,12 @@ def csv_export(modeladmin, request, queryset):
 class MemberAdmin(admin.ModelAdmin):
     list_display = (
         '__str__',
+        'sepa_mandat',
         'gender',
         'first_name',
         'last_name',
         'email',
+        'mahnungsstatus',
         # 'paid_2021',
         # 'paid_2022',
         # 'paid_2023',
@@ -127,7 +129,7 @@ class MemberAdmin(admin.ModelAdmin):
         'member_exited',
         'membership_type',
         'position_type')
-    readonly_fields = ('application_form', 'created_at', 'updated_at')
+    readonly_fields = ('sepa_mandat', 'application_form', 'created_at', 'updated_at')
     list_filter = ('membership_type',)
     actions = [csv_export]
 

@@ -57,6 +57,21 @@ class MemberApplication(models.Model):
         (DIVERS, _('Divers')),
     )
 
+    # Options for student status
+    TUM = 'tum'
+    LMU = 'lmu'
+    OTHER_UNIVERSITY = 'other_university'
+    APPRENTICESHIP = 'apprenticeship'
+    WORKING = 'working'
+
+    STUDENT_STATUS_CHOICES = (
+        (TUM, _('TUM')),
+        (LMU, _('LMU')),
+        (OTHER_UNIVERSITY, _('Andere Universität')),
+        (APPRENTICESHIP, _('Ausbildung')),
+        (WORKING, _('Berufstätig')),
+    )
+
     first_name = models.CharField(
         max_length=100,
         null=False,
@@ -73,6 +88,12 @@ class MemberApplication(models.Model):
         blank=False,
         choices=GENDERS,
         verbose_name='Geschlecht')
+    student_status = models.CharField(
+        max_length=50,
+        null=True,
+        blank=True,
+        choices=STUDENT_STATUS_CHOICES,
+        verbose_name='Student Status')
     email = models.EmailField(
         null=False,
         blank=False,

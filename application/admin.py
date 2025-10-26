@@ -17,6 +17,7 @@ def create_new_member_from_application(application):
     member.first_name = application.first_name
     member.last_name = application.last_name
     member.gender = application.gender
+    member.student_status = application.student_status
     member.email = application.email
     member.birthday = application.birthday
     member.phone_number = application.phone_number
