@@ -113,11 +113,11 @@ def csv_export(modeladmin, request, queryset):
 class MemberAdmin(admin.ModelAdmin):
     list_display = (
         '__str__',
-        'sepa_mandat',
         'gender',
         'first_name',
         'last_name',
         'email',
+        'sepa_mandat',
         'mahnungsstatus',
         # 'paid_2021',
         # 'paid_2022',
