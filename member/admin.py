@@ -117,7 +117,7 @@ class MemberAdmin(admin.ModelAdmin):
         'first_name',
         'last_name',
         'email',
-        'sepa_mandat',
+        'sepa_ok',
         'mahnungsstatus',
         # 'paid_2021',
         # 'paid_2022',
