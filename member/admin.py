@@ -85,8 +85,13 @@ def csv_export(modeladmin, request, queryset):
                      'Land',
                      'IBAN',
                      'BIC',
+                     'SEPA-Datum',
+                     'SEPA-OK',
+                     'SEPA-Mandat',
                      'Art der Mitgliedschaft',
                      'Mitglied seit',
+                     'Mitglied ausgetreten',
+                     'Mahnungsstatus',
                      ])
 
     for member in queryset:
@@ -104,8 +109,13 @@ def csv_export(modeladmin, request, queryset):
                         member.country,
                         member.iban,
                         member.bic,
+                        member.sepa_date,
+                        member.sepa_ok,
+                        member.sepa_mandat,
                         member.membership_type,
-                        member.member_since])
+                        member.member_since,
+                        member.member_exited,
+                        member.mahnungsstatus])
 
     return response
 
